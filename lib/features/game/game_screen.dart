@@ -1,36 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle_app/di/injection.dart';
+import 'package:puzzle_app/features/game/cubit/game_cubit.dart';
+import 'package:puzzle_app/features/game/cubit/game_state.dart';
 import 'package:puzzle_app/features/game/widgets/game_field.dart';
 
-class GameScreen extends StatefulWidget {
-  const GameScreen({super.key});
+class GameScreen extends StatelessWidget {
+  const GameScreen({
+    super.key,
+  });
 
-  @override
-  State<GameScreen> createState() => _GameScreenState();
-}
-
-class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
-    String gameTime = '00:00';
-    int stepsCount = 0;
-    List<int> numbersData = [
-      1,
-      2,
-      3,
-      4,
-      5,
-      -1,
-      6,
-      7,
-      8,
-      9,
-      10,
-      11,
-      12,
-      13,
-      14,
-      15
-    ];
+    return BlocProvider(
+      create: (context) => getIt<GameCubit>(),
+      child: const _GameScreen(),
+    );
+  }
+}
+
+class _GameScreen extends StatefulWidget {
+  const _GameScreen({super.key});
+
+  @override
+  State<_GameScreen> createState() => _GameScreenState();
+}
+
+class _GameScreenState extends State<_GameScreen> {
+  @override
+  Widget build(BuildContext context) {
+    const gameTime = '00:00';
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -39,18 +39,7 @@ class _GameScreenState extends State<GameScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Column(
-                  children: [
-                    Text(
-                      'Time: $gameTime',
-                      style: const TextStyle(fontSize: 21),
-                    ),
-                    Text(
-                      'Steps: $stepsCount',
-                      style: const TextStyle(fontSize: 21),
-                    ),
-                  ],
-                ),
+                const TimeStepsColumn(gameTime: gameTime),
                 const SizedBox(
                   width: 20,
                 ),
@@ -59,7 +48,7 @@ class _GameScreenState extends State<GameScreen> {
                     color: Colors.cyan.shade100,
                     child: IconButton(
                         onPressed: () {
-                          stepsCount = 0;
+                          context.read<GameCubit>().restartGame();
                         },
                         iconSize: 40,
                         icon: const Icon(Icons.repeat)),
@@ -67,19 +56,53 @@ class _GameScreenState extends State<GameScreen> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(40),
-              child: GameField(
-                gameData: numbersData,
-                tapNumber: () {
-                  stepsCount++;
-                  print(stepsCount);
-                },
+            SizedBox(
+              height: 450,
+              child: Padding(
+                padding: const EdgeInsets.all(40),
+                child: BlocSelector<GameCubit, GameState, List<int>>(
+                  selector: (state) => state.numbers,
+                  builder: (context, numbersData) {
+                    return GameField(
+                      gameData: numbersData,
+                    );
+                  },
+                ),
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class TimeStepsColumn extends StatelessWidget {
+  const TimeStepsColumn({
+    super.key,
+    required this.gameTime,
+  });
+
+  final String gameTime;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<GameCubit, GameState, int>(
+      selector: (state) => state.stepsCount as int,
+      builder: (context, stepsCount) {
+        return Column(
+          children: [
+            Text(
+              'Time: $gameTime',
+              style: const TextStyle(fontSize: 21),
+            ),
+            Text(
+              'Steps: $stepsCount',
+              style: const TextStyle(fontSize: 21),
+            ),
+          ],
+        );
+      },
     );
   }
 }
