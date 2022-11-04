@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:puzzle_app/features/game/cubit/game_cubit.dart';
 
 class GameField extends StatelessWidget {
-  GameField({required this.gameData, required this.tapNumber, super.key});
+  const GameField({required this.gameData, super.key});
 
-  List<int> gameData;
-  VoidCallback tapNumber;
+  final List<int> gameData;
 
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         mainAxisSpacing: 2,
         crossAxisSpacing: 2,
         crossAxisCount: 4,
@@ -20,7 +21,9 @@ class GameField extends StatelessWidget {
       itemBuilder: (context, index) {
         return Center(
           child: GestureDetector(
-            onTap: tapNumber,
+            onTap: () {
+              context.read<GameCubit>().numberPressed(index);
+            },
             child: DecoratedBox(
               decoration: BoxDecoration(
                   color: Colors.cyan.shade100,
@@ -31,7 +34,7 @@ class GameField extends StatelessWidget {
                 child: Center(
                   child: Text(
                     gameData[index] == -1 ? '' : gameData[index].toString(),
-                    style: TextStyle(fontSize: 25),
+                    style: const TextStyle(fontSize: 25),
                     //textAlign: TextAlign.center,
                   ),
                 ),
