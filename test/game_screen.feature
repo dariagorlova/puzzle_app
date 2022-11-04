@@ -18,5 +18,5 @@ Feature: Start of application
     When I tap {'1'} text
     And I tap {Icons.repeat} icon
     Then I don't see {'Steps: 1'}
-    And I see {'Steps: 0'}
+    And I see {'Steps: 0'} text
 
