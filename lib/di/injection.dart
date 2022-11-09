@@ -8,4 +8,3 @@ final getIt = GetIt.instance;
 GetIt configureInjection(String environment) {
   return $initGetIt(getIt, environment: environment);
 }
-//Future<void> configureInjection() => $initGetIt(getIt);
