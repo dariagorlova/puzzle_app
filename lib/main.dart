@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:injectable/injectable.dart';
 import 'package:puzzle_app/di/injection.dart';
@@ -37,7 +36,8 @@ class _MyAppState extends State<MyApp> {
       locale: widget.locale,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        scaffoldBackgroundColor: Colors.yellow.shade50,
+        //scaffoldBackgroundColor: Colors.yellow.shade50,
+        cardColor: Colors.yellow.shade600,
       ),
       localizationsDelegates: const [
         AppLocalizations.delegate,
