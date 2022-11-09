@@ -16,7 +16,7 @@ void main() {
   Future<void> bddSetUp(WidgetTester tester) async {
     await theAppIsRunning(tester);
   }
-  group('''Start of application''', () {
+  group('''Game''', () {
     testWidgets('''As a User I want to see initial text''', (tester) async {
       await bddSetUp(tester);
       await iSeeText(tester, 'Time: 00:00');
