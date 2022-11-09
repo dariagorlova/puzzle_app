@@ -39,7 +39,9 @@ class Translations_uk extends Translations {
   String get mainPageTitle => "Пятнашкі";
   String get timeText => "Час";
   String get stepsText => "Кроки";
-  String get congratulationText => "Вітаю";
+  String get congratulationText => "Вітаю!";
+  String get yourResultsText => "Твій результат";
+  String get playAgain => "Грати ще";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -55,6 +57,10 @@ class Translations_uk extends Translations {
         return stepsText;
       case 'congratulationText':
         return congratulationText;
+      case 'yourResultsText':
+        return yourResultsText;
+      case 'playAgain':
+        return playAgain;
       default:
         return super[key];
     }
