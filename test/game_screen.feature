@@ -1,4 +1,4 @@
-Feature: Start of application
+Feature: Game
 
   Background:
     Given the app is running

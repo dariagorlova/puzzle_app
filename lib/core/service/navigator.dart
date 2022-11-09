@@ -7,8 +7,12 @@ class PuzzleNavigator {
 
   final AppRouter _router;
 
-  Future<void> endGame() => _router.push(
-        const CongratulationRoute(),
+  Future<void> endGame(
+    String time,
+    int steps,
+  ) =>
+      _router.push(
+        CongratulationRoute(duration: time, steps: steps),
       );
 
   Future<bool> pop() => _router.pop();

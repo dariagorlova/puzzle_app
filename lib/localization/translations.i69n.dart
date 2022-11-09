@@ -38,7 +38,9 @@ class Translations implements i69n.I69nMessageBundle {
   String get mainPageTitle => "Puzzle";
   String get timeText => "Time";
   String get stepsText => "Steps";
-  String get congratulationText => "Congratulation";
+  String get congratulationText => "Congratulation!";
+  String get yourResultsText => "Your results";
+  String get playAgain => "Play again";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -54,6 +56,10 @@ class Translations implements i69n.I69nMessageBundle {
         return stepsText;
       case 'congratulationText':
         return congratulationText;
+      case 'yourResultsText':
+        return yourResultsText;
+      case 'playAgain':
+        return playAgain;
       default:
         return key;
     }
