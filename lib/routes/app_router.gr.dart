@@ -24,9 +24,14 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     CongratulationRoute.name: (routeData) {
+      final args = routeData.argsAs<CongratulationRouteArgs>();
       return MaterialPageX<bool>(
         routeData: routeData,
-        child: const CongratulationScreen(),
+        child: CongratulationScreen(
+          duration: args.duration,
+          key: args.key,
+          steps: args.steps,
+        ),
       );
     },
   };
@@ -58,12 +63,39 @@ class GameRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CongratulationScreen]
-class CongratulationRoute extends PageRouteInfo<void> {
-  const CongratulationRoute()
-      : super(
+class CongratulationRoute extends PageRouteInfo<CongratulationRouteArgs> {
+  CongratulationRoute({
+    required String duration,
+    Key? key,
+    required int steps,
+  }) : super(
           CongratulationRoute.name,
           path: '/congratulation-screen',
+          args: CongratulationRouteArgs(
+            duration: duration,
+            key: key,
+            steps: steps,
+          ),
         );
 
   static const String name = 'CongratulationRoute';
+}
+
+class CongratulationRouteArgs {
+  const CongratulationRouteArgs({
+    required this.duration,
+    this.key,
+    required this.steps,
+  });
+
+  final String duration;
+
+  final Key? key;
+
+  final int steps;
+
+  @override
+  String toString() {
+    return 'CongratulationRouteArgs{duration: $duration, key: $key, steps: $steps}';
+  }
 }
