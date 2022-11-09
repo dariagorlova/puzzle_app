@@ -18,7 +18,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$GameState {
   List<int> get numbers => throw _privateConstructorUsedError;
   dynamic get stepsCount => throw _privateConstructorUsedError;
-  bool get playerWon => throw _privateConstructorUsedError;
+  bool get gameHasBegun => throw _privateConstructorUsedError;
+  bool get playerWin => throw _privateConstructorUsedError;
+  dynamic get gameStartTimeInMilliSecSinceEpoch =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GameStateCopyWith<GameState> get copyWith =>
@@ -29,7 +32,12 @@ mixin _$GameState {
 abstract class $GameStateCopyWith<$Res> {
   factory $GameStateCopyWith(GameState value, $Res Function(GameState) then) =
       _$GameStateCopyWithImpl<$Res>;
-  $Res call({List<int> numbers, dynamic stepsCount, bool playerWon});
+  $Res call(
+      {List<int> numbers,
+      dynamic stepsCount,
+      bool gameHasBegun,
+      bool playerWin,
+      dynamic gameStartTimeInMilliSecSinceEpoch});
 }
 
 /// @nodoc
@@ -44,7 +52,9 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
   $Res call({
     Object? numbers = freezed,
     Object? stepsCount = freezed,
-    Object? playerWon = freezed,
+    Object? gameHasBegun = freezed,
+    Object? playerWin = freezed,
+    Object? gameStartTimeInMilliSecSinceEpoch = freezed,
   }) {
     return _then(_value.copyWith(
       numbers: numbers == freezed
@@ -55,10 +65,19 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
           ? _value.stepsCount
           : stepsCount // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      playerWon: playerWon == freezed
-          ? _value.playerWon
-          : playerWon // ignore: cast_nullable_to_non_nullable
+      gameHasBegun: gameHasBegun == freezed
+          ? _value.gameHasBegun
+          : gameHasBegun // ignore: cast_nullable_to_non_nullable
               as bool,
+      playerWin: playerWin == freezed
+          ? _value.playerWin
+          : playerWin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      gameStartTimeInMilliSecSinceEpoch: gameStartTimeInMilliSecSinceEpoch ==
+              freezed
+          ? _value.gameStartTimeInMilliSecSinceEpoch
+          : gameStartTimeInMilliSecSinceEpoch // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ));
   }
 }
@@ -69,7 +88,12 @@ abstract class _$$_GameStateCopyWith<$Res> implements $GameStateCopyWith<$Res> {
           _$_GameState value, $Res Function(_$_GameState) then) =
       __$$_GameStateCopyWithImpl<$Res>;
   @override
-  $Res call({List<int> numbers, dynamic stepsCount, bool playerWon});
+  $Res call(
+      {List<int> numbers,
+      dynamic stepsCount,
+      bool gameHasBegun,
+      bool playerWin,
+      dynamic gameStartTimeInMilliSecSinceEpoch});
 }
 
 /// @nodoc
@@ -86,7 +110,9 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
   $Res call({
     Object? numbers = freezed,
     Object? stepsCount = freezed,
-    Object? playerWon = freezed,
+    Object? gameHasBegun = freezed,
+    Object? playerWin = freezed,
+    Object? gameStartTimeInMilliSecSinceEpoch = freezed,
   }) {
     return _then(_$_GameState(
       numbers: numbers == freezed
@@ -94,10 +120,18 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
           : numbers // ignore: cast_nullable_to_non_nullable
               as List<int>,
       stepsCount: stepsCount == freezed ? _value.stepsCount : stepsCount,
-      playerWon: playerWon == freezed
-          ? _value.playerWon
-          : playerWon // ignore: cast_nullable_to_non_nullable
+      gameHasBegun: gameHasBegun == freezed
+          ? _value.gameHasBegun
+          : gameHasBegun // ignore: cast_nullable_to_non_nullable
               as bool,
+      playerWin: playerWin == freezed
+          ? _value.playerWin
+          : playerWin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      gameStartTimeInMilliSecSinceEpoch:
+          gameStartTimeInMilliSecSinceEpoch == freezed
+              ? _value.gameStartTimeInMilliSecSinceEpoch
+              : gameStartTimeInMilliSecSinceEpoch,
     ));
   }
 }
@@ -108,7 +142,9 @@ class _$_GameState implements _GameState {
   const _$_GameState(
       {final List<int> numbers = const [],
       this.stepsCount = 0,
-      this.playerWon = false})
+      this.gameHasBegun = false,
+      this.playerWin = false,
+      this.gameStartTimeInMilliSecSinceEpoch = 0})
       : _numbers = numbers;
 
   final List<int> _numbers;
@@ -124,11 +160,17 @@ class _$_GameState implements _GameState {
   final dynamic stepsCount;
   @override
   @JsonKey()
-  final bool playerWon;
+  final bool gameHasBegun;
+  @override
+  @JsonKey()
+  final bool playerWin;
+  @override
+  @JsonKey()
+  final dynamic gameStartTimeInMilliSecSinceEpoch;
 
   @override
   String toString() {
-    return 'GameState(numbers: $numbers, stepsCount: $stepsCount, playerWon: $playerWon)';
+    return 'GameState(numbers: $numbers, stepsCount: $stepsCount, gameHasBegun: $gameHasBegun, playerWin: $playerWin, gameStartTimeInMilliSecSinceEpoch: $gameStartTimeInMilliSecSinceEpoch)';
   }
 
   @override
@@ -139,7 +181,12 @@ class _$_GameState implements _GameState {
             const DeepCollectionEquality().equals(other._numbers, _numbers) &&
             const DeepCollectionEquality()
                 .equals(other.stepsCount, stepsCount) &&
-            const DeepCollectionEquality().equals(other.playerWon, playerWon));
+            const DeepCollectionEquality()
+                .equals(other.gameHasBegun, gameHasBegun) &&
+            const DeepCollectionEquality().equals(other.playerWin, playerWin) &&
+            const DeepCollectionEquality().equals(
+                other.gameStartTimeInMilliSecSinceEpoch,
+                gameStartTimeInMilliSecSinceEpoch));
   }
 
   @override
@@ -147,7 +194,9 @@ class _$_GameState implements _GameState {
       runtimeType,
       const DeepCollectionEquality().hash(_numbers),
       const DeepCollectionEquality().hash(stepsCount),
-      const DeepCollectionEquality().hash(playerWon));
+      const DeepCollectionEquality().hash(gameHasBegun),
+      const DeepCollectionEquality().hash(playerWin),
+      const DeepCollectionEquality().hash(gameStartTimeInMilliSecSinceEpoch));
 
   @JsonKey(ignore: true)
   @override
@@ -159,14 +208,20 @@ abstract class _GameState implements GameState {
   const factory _GameState(
       {final List<int> numbers,
       final dynamic stepsCount,
-      final bool playerWon}) = _$_GameState;
+      final bool gameHasBegun,
+      final bool playerWin,
+      final dynamic gameStartTimeInMilliSecSinceEpoch}) = _$_GameState;
 
   @override
   List<int> get numbers;
   @override
   dynamic get stepsCount;
   @override
-  bool get playerWon;
+  bool get gameHasBegun;
+  @override
+  bool get playerWin;
+  @override
+  dynamic get gameStartTimeInMilliSecSinceEpoch;
   @override
   @JsonKey(ignore: true)
   _$$_GameStateCopyWith<_$_GameState> get copyWith =>
