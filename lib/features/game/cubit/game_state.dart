@@ -12,9 +12,3 @@ class GameState with _$GameState {
     @Default(0) gameStartTimeInMilliSecSinceEpoch,
   }) = _GameState;
 }
-
-extension XGameState on GameState {
-  //bool get canSwap => answers[attempt].any((l) => l.letter.isNotEmpty);
-  //int get gameTime => (DateTime.now().millisecondsSinceEpoch.toInt() -
-  //    millisecondsSinceEpochStart!) as int;
-}
