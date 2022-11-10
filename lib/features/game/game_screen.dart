@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzle_app/di/injection.dart';
@@ -39,12 +38,12 @@ class _GameScreenState extends State<_GameScreen> {
         listenWhen: (previous, current) =>
             !previous.playerWin && current.playerWin,
         listener: (context, state) async {
-          final gameDuration = context.read<GameCubit>().getGameDuration();
-          await showAlertDialog(
-            context,
-            gameDuration,
-            state.stepsCount as int,
-          );
+          // final gameDuration = context.read<GameCubit>().getGameDuration();
+          // await showAlertDialog(
+          //   context,
+          //   gameDuration,
+          //   state.stepsCount as int,
+          // );
           if (mounted) context.read<GameCubit>().restartGame();
         },
         child: Stack(
@@ -54,16 +53,16 @@ class _GameScreenState extends State<_GameScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        '${AppLocalizations.of(context).timeText}: ',
-                        style: const TextStyle(fontSize: 21),
-                      ),
-                      const TimerWidget(),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.center,
+                  //   children: [
+                  //     Text(
+                  //       '${AppLocalizations.of(context).timeText}: ',
+                  //       style: const TextStyle(fontSize: 21),
+                  //     ),
+                  //     const TimerWidget(),
+                  //   ],
+                  // ),
                   SizedBox(
                     height: 450,
                     child: Padding(
@@ -71,9 +70,9 @@ class _GameScreenState extends State<_GameScreen> {
                       child: BlocSelector<GameCubit, GameState, List<int>>(
                         selector: (state) => state.numbers,
                         builder: (context, numbersData) {
-                          return GameField(
-                            gameData: numbersData,
-                          );
+                          return const GameField(
+                              //gameData: numbersData,
+                              );
                         },
                       ),
                     ),

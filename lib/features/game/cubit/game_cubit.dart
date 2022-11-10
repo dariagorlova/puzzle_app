@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:puzzle_app/core/model/box.dart';
 import 'package:puzzle_app/core/service/navigator.dart';
 import 'package:puzzle_app/features/game/cubit/game_state.dart';
 
@@ -55,6 +56,188 @@ class GameCubit extends Cubit<GameState> {
 
       emit(state.copyWith(numbers: tmpList));
     }
+
+    //final boxes = calculateBoxCoords(0, 0, 50, 10);
+    //emit(state.copyWith(boxes: boxes));
+  }
+
+  List<BoxWithCoord> calculateBoxCoords(
+    double startX,
+    double startY,
+    int boxWidth,
+    int spaceBetweenBoxes,
+  ) {
+    final gameData = state.numbers;
+    final listBoxes = <BoxWithCoord>[];
+
+    for (var i = 0; i < 16; i++) {
+      var coordX = startX;
+      var coordY = startY;
+
+      if (i >= 0 && i < 4) {
+        coordX = startX + i * (boxWidth + spaceBetweenBoxes);
+        coordY = startY;
+      } else if (i >= 4 && i < 8) {
+        coordX = startX + (i - 4) * (boxWidth + spaceBetweenBoxes);
+        coordY = startY + (boxWidth + spaceBetweenBoxes);
+      } else if (i >= 8 && i < 12) {
+        coordX = startX + (i - 8) * (boxWidth + spaceBetweenBoxes);
+        coordY = startY + 2 * (boxWidth + spaceBetweenBoxes);
+      } else if (i >= 12 && i < 16) {
+        coordX = startX + (i - 12) * (boxWidth + spaceBetweenBoxes);
+        coordY = startY + 3 * (boxWidth + spaceBetweenBoxes);
+      }
+
+      listBoxes.add(
+        BoxWithCoord(
+          coordX: coordX,
+          coordY: coordY,
+          text: gameData[i],
+        ),
+      );
+    }
+
+    return listBoxes;
+  }
+
+  // void swapedBoxes(List<BoxWithCoord> list) {
+  //   final s = state.stepsCount + 1;
+  //   emit(state.copyWith(stepsCount: s));
+
+  //   if (isPuzzleSolved()) {
+  //     emit(state.copyWith(gameHasBegun: false, playerWin: true));
+  //   }
+  // }
+
+  void swapBoxes(
+    int curNum,
+    List<BoxWithCoord> listBoxes,
+    int boxWidth,
+    int spaceBetweenBoxes,
+  ) {
+    final curElement =
+        listBoxes.firstWhere((element) => element.text == curNum);
+    final curElementIndex =
+        listBoxes.indexWhere((element) => element == curElement);
+    final coordMidXcur = curElement.coordX + boxWidth / 2;
+    final coordMidYcur = curElement.coordY + boxWidth / 2;
+
+    final emptyElement = listBoxes.firstWhere((element) => element.text == 16);
+    final emptyIndex =
+        listBoxes.indexWhere((element) => element == emptyElement);
+    final coordMidXempty = emptyElement.coordX + boxWidth / 2;
+    final coordMidYempty = emptyElement.coordY + boxWidth / 2;
+
+    var canSwap = false;
+    final boxWidthAndSpaceBetween = boxWidth + spaceBetweenBoxes;
+
+    // can move current to right
+    if ((coordMidXcur + boxWidthAndSpaceBetween) == coordMidXempty &&
+        coordMidYcur == coordMidYempty) {
+      canSwap = true;
+    }
+    // can move current to down
+    if (coordMidXcur == coordMidXempty &&
+        (coordMidYcur + boxWidthAndSpaceBetween) == coordMidYempty) {
+      canSwap = true;
+    }
+    // can move current to left
+    if ((coordMidXcur - boxWidthAndSpaceBetween) == coordMidXempty &&
+        coordMidYcur == coordMidYempty) {
+      canSwap = true;
+    }
+    // can move current to top
+    if (coordMidXcur == coordMidXempty &&
+        (coordMidYcur - boxWidthAndSpaceBetween) == coordMidYempty) {
+      canSwap = true;
+    }
+
+    if (canSwap) {
+      listBoxes[curElementIndex] = BoxWithCoord(
+        coordX: emptyElement.coordX,
+        coordY: emptyElement.coordY,
+        text: curElement.text,
+      );
+      listBoxes[emptyIndex] = BoxWithCoord(
+        coordX: curElement.coordX,
+        coordY: curElement.coordY,
+        text: emptyElement.text,
+      );
+
+      final s = state.stepsCount + 1;
+      emit(state.copyWith(
+        stepsCount: s,
+      ));
+
+      //if (isPuzzleCompleted()) {
+      //  emit(state.copyWith(gameHasBegun: false, playerWin: true));
+      //}
+    }
+  }
+
+  void gameFinished() {
+    emit(state.copyWith(gameHasBegun: false, playerWin: true));
+  }
+
+  bool isPuzzleCompleted(
+    List<BoxWithCoord> list1,
+    List<BoxWithCoord> list2,
+  ) {
+    var result = false;
+    for (final box in list2) {
+      final elem = list1.firstWhere((element) => element.text == box.text);
+      if (box.coordX == elem.coordX && box.coordY == elem.coordY) {
+        result = true;
+      } else {
+        return false;
+      }
+    }
+
+    if (result) {
+      gameOver();
+    }
+
+    return result;
+  }
+
+  List<BoxWithCoord> fillInitialList(
+    double startX,
+    double startY,
+    int boxWidth,
+    int spaceBetweenBoxes,
+    List<int> gameData,
+  ) {
+    final listBoxes = <BoxWithCoord>[];
+
+    //final gameData = state.numbers;
+
+    for (var i = 0; i < 16; i++) {
+      var coordX = startX;
+      var coordY = startY;
+
+      if (i >= 0 && i < 4) {
+        coordX = startX + i * (boxWidth + spaceBetweenBoxes);
+        coordY = startY;
+      } else if (i >= 4 && i < 8) {
+        coordX = startX + (i - 4) * (boxWidth + spaceBetweenBoxes);
+        coordY = startY + (boxWidth + spaceBetweenBoxes);
+      } else if (i >= 8 && i < 12) {
+        coordX = startX + (i - 8) * (boxWidth + spaceBetweenBoxes);
+        coordY = startY + 2 * (boxWidth + spaceBetweenBoxes);
+      } else if (i >= 12 && i < 16) {
+        coordX = startX + (i - 12) * (boxWidth + spaceBetweenBoxes);
+        coordY = startY + 3 * (boxWidth + spaceBetweenBoxes);
+      }
+
+      listBoxes.add(
+        BoxWithCoord(
+          coordX: coordX,
+          coordY: coordY,
+          text: gameData[i],
+        ),
+      );
+    }
+    return listBoxes;
   }
 
   List<int> createNewListOfNumbers() {
