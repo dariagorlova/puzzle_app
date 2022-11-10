@@ -5,8 +5,11 @@ import 'package:puzzle_app/features/game/cubit/game_cubit.dart';
 import 'package:puzzle_app/localization/localization.dart';
 
 class CongratulationScreen extends StatelessWidget {
-  const CongratulationScreen(
-      {required this.duration, super.key, required this.steps});
+  const CongratulationScreen({
+    required this.duration,
+    super.key,
+    required this.steps,
+  });
 
   final String duration;
   final int steps;

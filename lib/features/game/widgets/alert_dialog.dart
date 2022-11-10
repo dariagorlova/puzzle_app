@@ -7,8 +7,11 @@ Future<void> showAlertDialog(BuildContext context, String time, int steps) {
     useRootNavigator: false,
     builder: (context) {
       final t = AppLocalizations.of(context);
-      final body =
-          '${t.yourResultsText} \n ${t.timeText} $time \n ${t.stepsText} ${steps.toString()}';
+
+      final body = '''
+          ${t.yourResultsText} \n 
+          ${t.timeText} $time \n 
+          ${t.stepsText} ${steps.toString()}''';
       return AlertDialog(
         title: Text(t.congratulationText),
         content: Text(body),
