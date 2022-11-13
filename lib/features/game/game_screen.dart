@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:puzzle_app/di/injection.dart';
 import 'package:puzzle_app/features/game/cubit/game_cubit.dart';
 import 'package:puzzle_app/features/game/cubit/game_state.dart';
-import 'package:puzzle_app/features/game/widgets/alert_dialog.dart';
 import 'package:puzzle_app/features/game/widgets/background.dart';
 import 'package:puzzle_app/features/game/widgets/game_field.dart';
 import 'package:puzzle_app/features/game/widgets/timer/timer_widget.dart';
@@ -33,6 +33,9 @@ class _GameScreen extends StatefulWidget {
 class _GameScreenState extends State<_GameScreen> {
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       body: BlocListener<GameCubit, GameState>(
         listenWhen: (previous, current) =>
@@ -46,46 +49,159 @@ class _GameScreenState extends State<_GameScreen> {
           // );
           if (mounted) context.read<GameCubit>().restartGame();
         },
-        child: Stack(
-          children: [
-            const Background(),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.center,
-                  //   children: [
-                  //     Text(
-                  //       '${AppLocalizations.of(context).timeText}: ',
-                  //       style: const TextStyle(fontSize: 21),
-                  //     ),
-                  //     const TimerWidget(),
-                  //   ],
-                  // ),
-                  SizedBox(
-                    height: 450,
-                    child: Padding(
-                      padding: const EdgeInsets.all(40),
-                      child: BlocSelector<GameCubit, GameState, List<int>>(
-                        selector: (state) => state.numbers,
-                        builder: (context, numbersData) {
-                          return const GameField(
-                              //gameData: numbersData,
-                              );
-                        },
-                      ),
-                    ),
+        child:
+            //Stack(
+            //  children: [
+            //    const Background(),
+            screenHeight > screenWidth
+                ? VerticalView(
+                    screenHeight: screenHeight,
+                    screenWidth: screenWidth,
+                  )
+                : HorizontalView(
+                    screenHeight: screenHeight,
+                    screenWidth: screenWidth,
                   ),
-                  const Center(
-                    child: StepsWidget(),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+        //  ],
+        //),
       ),
+    );
+  }
+}
+
+class VerticalView extends StatelessWidget {
+  const VerticalView({
+    super.key,
+    required this.screenHeight,
+    required this.screenWidth,
+  });
+
+  final double screenHeight;
+  final double screenWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final boxWidth = screenWidth ~/ 6;
+    final startX =
+        ((screenWidth - 40) / 2 - 2 * boxWidth - 1.5 * (boxWidth / 5)).toInt();
+
+    return Stack(
+      children: [
+        const Background(),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: boxWidth * 6, //screenHeight / 2, //450,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: BlocSelector<GameCubit, GameState, List<int>>(
+                    selector: (state) => state.numbers,
+                    builder: (context, numbersData) {
+                      return GameField(
+                        startX: startX,
+                        boxWidth: boxWidth,
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Center(
+                child: Column(
+                  children: [
+                    const StepsWidget(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${AppLocalizations.of(context).timeText}: ',
+                          style: const TextStyle(fontSize: 21),
+                        ),
+                        const TimerWidget(),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class HorizontalView extends StatelessWidget {
+  const HorizontalView({
+    super.key,
+    required this.screenHeight,
+    required this.screenWidth,
+  });
+
+  final double screenHeight;
+  final double screenWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final boxWidth = screenHeight ~/ 6;
+    final startX =
+        ((screenHeight - 40) / 2 - 2 * boxWidth - 1.5 * (boxWidth / 5)).toInt();
+
+    return Stack(
+      children: [
+        const Background(),
+        Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 20),
+                alignment: Alignment.center,
+                height: screenHeight,
+                width: boxWidth * 6, //screenWidth / 2,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: BlocSelector<GameCubit, GameState, List<int>>(
+                    selector: (state) => state.numbers,
+                    builder: (context, numbersData) {
+                      return GameField(
+                        startX: startX,
+                        boxWidth: boxWidth,
+                      );
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 40),
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const StepsWidget(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '${AppLocalizations.of(context).timeText}: ',
+                          style: const TextStyle(fontSize: 21),
+                        ),
+                        const TimerWidget(),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -123,7 +239,11 @@ class StepsWidget extends StatelessWidget {
       builder: (context, stepsCount) {
         return Text(
           '${t.stepsText}: $stepsCount',
-          style: const TextStyle(fontSize: 21),
+          style: GoogleFonts.merienda(
+            textStyle: Theme.of(context).textTheme.headline4,
+            fontSize: 35,
+            fontWeight: FontWeight.w700,
+          ),
         );
       },
     );

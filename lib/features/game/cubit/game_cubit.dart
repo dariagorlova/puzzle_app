@@ -165,9 +165,11 @@ class GameCubit extends Cubit<GameState> {
       );
 
       final s = state.stepsCount + 1;
-      emit(state.copyWith(
-        stepsCount: s,
-      ));
+      emit(
+        state.copyWith(
+          stepsCount: s,
+        ),
+      );
 
       //if (isPuzzleCompleted()) {
       //  emit(state.copyWith(gameHasBegun: false, playerWin: true));
@@ -201,8 +203,8 @@ class GameCubit extends Cubit<GameState> {
   }
 
   List<BoxWithCoord> fillInitialList(
-    double startX,
-    double startY,
+    int startX,
+    int startY,
     int boxWidth,
     int spaceBetweenBoxes,
     List<int> gameData,
@@ -231,8 +233,8 @@ class GameCubit extends Cubit<GameState> {
 
       listBoxes.add(
         BoxWithCoord(
-          coordX: coordX,
-          coordY: coordY,
+          coordX: coordX.toDouble(),
+          coordY: coordY.toDouble(),
           text: gameData[i],
         ),
       );

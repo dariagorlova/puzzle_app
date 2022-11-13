@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:puzzle_app/core/model/box.dart';
 import 'package:puzzle_app/features/game/cubit/game_cubit.dart';
+import 'package:puzzle_app/features/game/widgets/timer/bloc/timer_bloc.dart';
 
 class GameField extends StatefulWidget {
-  const GameField({super.key});
+  const GameField({super.key, required this.boxWidth, required this.startX});
+
+  final int boxWidth;
+  final int startX;
 
   @override
   State<GameField> createState() => _GameFieldState();
@@ -13,104 +18,24 @@ class GameField extends StatefulWidget {
 class _GameFieldState extends State<GameField> {
   List<BoxWithCoord> listBoxes = <BoxWithCoord>[];
   List<BoxWithCoord> initlistBoxes = <BoxWithCoord>[];
-  final startX = 50.0;
-  final startY = 50.0;
-  final boxWidth = 50;
-  final spaceBetweenBoxes = 10;
+
+  final startY = 0;
+  int spaceBetweenBoxes = 0;
 
   @override
   void initState() {
     super.initState();
+
     final gameData = context.read<GameCubit>().state.numbers;
+    spaceBetweenBoxes = widget.boxWidth ~/ 5;
     listBoxes = context.read<GameCubit>().fillInitialList(
-          startX,
+          widget.startX,
           startY,
-          boxWidth,
+          widget.boxWidth,
           spaceBetweenBoxes,
           gameData,
         );
-    // final gameData = context.read<GameCubit>().state.numbers;
-    // for (var i = 0; i < 16; i++) {
-    //   var coordX = startX;
-    //   var coordY = startY;
-    //   if (i >= 0 && i < 4) {
-    //     coordX = startX + i * (boxWidth + spaceBetweenBoxes);
-    //     coordY = startY;
-    //   } else if (i >= 4 && i < 8) {
-    //     coordX = startX + (i - 4) * (boxWidth + spaceBetweenBoxes);
-    //     coordY = startY + (boxWidth + spaceBetweenBoxes);
-    //   } else if (i >= 8 && i < 12) {
-    //     coordX = startX + (i - 8) * (boxWidth + spaceBetweenBoxes);
-    //     coordY = startY + 2 * (boxWidth + spaceBetweenBoxes);
-    //   } else if (i >= 12 && i < 16) {
-    //     coordX = startX + (i - 12) * (boxWidth + spaceBetweenBoxes);
-    //     coordY = startY + 3 * (boxWidth + spaceBetweenBoxes);
-    //   }
-    //   listBoxes.add(
-    //     BoxWithCoord(
-    //       coordX: coordX,
-    //       coordY: coordY,
-    //       text: gameData[i],
-    //     ),
-    //   );
-    //   initlistBoxes.add(
-    //     BoxWithCoord(
-    //       coordX: coordX,
-    //       coordY: coordY,
-    //       text: gameData[i],
-    //     ),
-    //   );
-    //}
   }
-
-  // void swapBoxes(int curNum) {
-  //   final curElement =
-  //       listBoxes.firstWhere((element) => element.text == curNum);
-  //   final curElementIndex =
-  //       listBoxes.indexWhere((element) => element == curElement);
-  //   final coordMidXcur = curElement.coordX + boxWidth / 2;
-  //   final coordMidYcur = curElement.coordY + boxWidth / 2;
-  //   final emptyElement = listBoxes.firstWhere((element) => element.text == 16);
-  //   final emptyIndex =
-  //       listBoxes.indexWhere((element) => element == emptyElement);
-  //   final coordMidXempty = emptyElement.coordX + boxWidth / 2;
-  //   final coordMidYempty = emptyElement.coordY + boxWidth / 2;
-  //   var canSwap = false;
-  //   final boxWidthAndSpaceBetween = boxWidth + spaceBetweenBoxes;
-  //   // can move current to right
-  //   if ((coordMidXcur + boxWidthAndSpaceBetween) == coordMidXempty &&
-  //       coordMidYcur == coordMidYempty) {
-  //     canSwap = true;
-  //   }
-  //   // can move current to down
-  //   if (coordMidXcur == coordMidXempty &&
-  //       (coordMidYcur + boxWidthAndSpaceBetween) == coordMidYempty) {
-  //     canSwap = true;
-  //   }
-  //   // can move current to left
-  //   if ((coordMidXcur - boxWidthAndSpaceBetween) == coordMidXempty &&
-  //       coordMidYcur == coordMidYempty) {
-  //     canSwap = true;
-  //   }
-  //   // can move current to top
-  //   if (coordMidXcur == coordMidXempty &&
-  //       (coordMidYcur - boxWidthAndSpaceBetween) == coordMidYempty) {
-  //     canSwap = true;
-  //   }
-  //   if (canSwap) {
-  //     listBoxes[curElementIndex] = BoxWithCoord(
-  //       coordX: emptyElement.coordX,
-  //       coordY: emptyElement.coordY,
-  //       text: curElement.text,
-  //     );
-  //     listBoxes[emptyIndex] = BoxWithCoord(
-  //       coordX: curElement.coordX,
-  //       coordY: curElement.coordY,
-  //       text: emptyElement.text,
-  //     );
-  //     context.read<GameCubit>().swapedBoxes(listBoxes);
-  //   }
-  // }
 
   List<Widget> _buildTiles() => List<Widget>.generate(16, _buildOneTile);
 
@@ -118,23 +43,27 @@ class _GameFieldState extends State<GameField> {
     return AnimatedPositioned(
       left: listBoxes[index].coordX,
       top: listBoxes[index].coordY,
-      width: boxWidth.toDouble(),
-      height: boxWidth.toDouble(),
-      duration: const Duration(seconds: 2),
+      width: widget.boxWidth.toDouble(),
+      height: widget.boxWidth.toDouble(),
+      duration: const Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
       child: GestureDetector(
         onTap: () {
           setState(() {
+            //if (context.read<GameCubit>().state.stepsCount == 0) {
+            //  context.read<TimerBloc>().add(TimerStarted(duration: 0));
+            //}
+
             context.read<GameCubit>().swapBoxes(
                   listBoxes[index].text,
                   listBoxes,
-                  boxWidth,
+                  widget.boxWidth,
                   spaceBetweenBoxes,
                 );
             final initList = context.read<GameCubit>().fillInitialList(
-                  startX,
+                  widget.startX,
                   startY,
-                  boxWidth,
+                  widget.boxWidth,
                   spaceBetweenBoxes,
                   List<int>.generate(16, (index) => index + 1),
                 );
@@ -147,9 +76,9 @@ class _GameFieldState extends State<GameField> {
               //initState();
               final gameData = context.read<GameCubit>().state.numbers;
               listBoxes = context.read<GameCubit>().fillInitialList(
-                    startX,
+                    widget.startX,
                     startY,
-                    boxWidth,
+                    widget.boxWidth,
                     spaceBetweenBoxes,
                     gameData,
                   );
@@ -182,20 +111,25 @@ class _GameFieldState extends State<GameField> {
                   // color: listBoxes[index].text != 16
                   //     ? Colors.orangeAccent.shade100
                   //     : Colors.transparent,
-                  width: boxWidth.toDouble(),
-                  height: boxWidth.toDouble(),
+                  width: widget.boxWidth.toDouble(),
+                  height: widget.boxWidth.toDouble(),
                   child: Center(
                     child: Text(
                       listBoxes[index].text.toString(),
-                      style: const TextStyle(color: Colors.black, fontSize: 25),
+                      style: GoogleFonts.merienda(
+                        textStyle: Theme.of(context).textTheme.headline4,
+                        fontSize: 35,
+                        //fontWeight: FontWeight.w700,
+                      ),
+                      //style: const TextStyle(color: Colors.black, fontSize: 25),
                     ),
                   ),
                 ),
               )
             : Container(
                 color: Colors.transparent,
-                width: boxWidth.toDouble(),
-                height: boxWidth.toDouble(),
+                width: widget.boxWidth.toDouble(),
+                height: widget.boxWidth.toDouble(),
                 child: const Text(''),
               ),
       ),
