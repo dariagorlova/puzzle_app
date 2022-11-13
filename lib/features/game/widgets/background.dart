@@ -4,6 +4,7 @@ class Background extends StatelessWidget {
   const Background({super.key});
   @override
   Widget build(BuildContext context) {
+    // ignore: use_decorated_box
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
