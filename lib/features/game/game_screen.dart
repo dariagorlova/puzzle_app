@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:puzzle_app/di/injection.dart';
 import 'package:puzzle_app/features/game/cubit/game_cubit.dart';
 import 'package:puzzle_app/features/game/cubit/game_state.dart';
 import 'package:puzzle_app/features/game/widgets/background.dart';
 import 'package:puzzle_app/features/game/widgets/game_field.dart';
+import 'package:puzzle_app/features/game/widgets/steps_widget.dart';
 import 'package:puzzle_app/features/game/widgets/timer/timer_widget.dart';
-import 'package:puzzle_app/localization/localization.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({
@@ -37,34 +36,35 @@ class _GameScreenState extends State<_GameScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body: BlocListener<GameCubit, GameState>(
-        listenWhen: (previous, current) =>
-            !previous.playerWin && current.playerWin,
-        listener: (context, state) async {
-          // final gameDuration = context.read<GameCubit>().getGameDuration();
-          // await showAlertDialog(
-          //   context,
-          //   gameDuration,
-          //   state.stepsCount as int,
-          // );
-          if (mounted) context.read<GameCubit>().restartGame();
-        },
-        child:
-            //Stack(
-            //  children: [
-            //    const Background(),
-            screenHeight > screenWidth
-                ? VerticalView(
-                    screenHeight: screenHeight,
-                    screenWidth: screenWidth,
-                  )
-                : HorizontalView(
-                    screenHeight: screenHeight,
-                    screenWidth: screenWidth,
-                  ),
-        //  ],
-        //),
-      ),
+      body:
+          // BlocListener<GameCubit, GameState>(
+          //   listenWhen: (previous, current) =>
+          //       !previous.playerWin && current.playerWin,
+          //   listener: (context, state) async {
+          //     // final gameDuration = context.read<GameCubit>().getGameDuration();
+          //     // await showAlertDialog(
+          //     //   context,
+          //     //   gameDuration,
+          //     //   state.stepsCount as int,
+          //     // );
+          //     if (mounted) context.read<GameCubit>().restartGame();
+          //   },
+          //   child:
+          //Stack(
+          //  children: [
+          //    const Background(),
+          screenHeight > screenWidth
+              ? VerticalView(
+                  screenHeight: screenHeight,
+                  screenWidth: screenWidth,
+                )
+              : HorizontalView(
+                  screenHeight: screenHeight,
+                  screenWidth: screenWidth,
+                ),
+      //  ],
+      //),
+      //),
     );
   }
 }
@@ -109,21 +109,27 @@ class VerticalView extends StatelessWidget {
               ),
               Center(
                 child: Column(
-                  children: [
-                    const StepsWidget(),
-                    const SizedBox(
-                      height: 20,
+                  children: const [
+                    StepsWidget(),
+                    SizedBox(
+                      height: 10,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${AppLocalizations.of(context).timeText}: ',
-                          style: const TextStyle(fontSize: 21),
-                        ),
-                        const TimerWidget(),
-                      ],
-                    ),
+                    TimerWidget(),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Text(
+                    //       '${AppLocalizations.of(context).timeText}: ',
+                    //       //style: const TextStyle(fontSize: 21),
+                    //       style: GoogleFonts.merienda(
+                    //         textStyle: Theme.of(context).textTheme.headline4,
+                    //         fontSize: 35,
+                    //         fontWeight: FontWeight.w700,
+                    //       ),
+                    //     ),
+                    //     const TimerWidget(),
+                    //   ],
+                    // ),
                   ],
                 ),
               ),
@@ -179,22 +185,12 @@ class HorizontalView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 40),
                 child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const StepsWidget(),
-                    const SizedBox(
+                  children: const [
+                    StepsWidget(),
+                    SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '${AppLocalizations.of(context).timeText}: ',
-                          style: const TextStyle(fontSize: 21),
-                        ),
-                        const TimerWidget(),
-                      ],
-                    ),
+                    TimerWidget(),
                   ],
                 ),
               ),
@@ -206,49 +202,49 @@ class HorizontalView extends StatelessWidget {
   }
 }
 
-class TimeStepsColumn extends StatelessWidget {
-  const TimeStepsColumn({
-    super.key,
-  });
+// class TimeStepsColumn extends StatelessWidget {
+//   const TimeStepsColumn({
+//     super.key,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        //TimeWidget(),
-        TimerWidget(),
-        SizedBox(
-          height: 30,
-        ),
-        StepsWidget(),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: const [
+//         //TimeWidget(),
+//         TimerWidget(),
+//         SizedBox(
+//           height: 30,
+//         ),
+//         StepsWidget(),
+//       ],
+//     );
+//   }
+// }
 
-class StepsWidget extends StatelessWidget {
-  const StepsWidget({
-    super.key,
-  });
+// class StepsWidget extends StatelessWidget {
+//   const StepsWidget({
+//     super.key,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
-    return BlocSelector<GameCubit, GameState, int>(
-      selector: (state) => state.stepsCount as int,
-      builder: (context, stepsCount) {
-        return Text(
-          '${t.stepsText}: $stepsCount',
-          style: GoogleFonts.merienda(
-            textStyle: Theme.of(context).textTheme.headline4,
-            fontSize: 35,
-            fontWeight: FontWeight.w700,
-          ),
-        );
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final t = AppLocalizations.of(context);
+//     return BlocSelector<GameCubit, GameState, int>(
+//       selector: (state) => state.stepsCount as int,
+//       builder: (context, stepsCount) {
+//         return Text(
+//           '${t.stepsText}: $stepsCount',
+//           style: GoogleFonts.merienda(
+//             textStyle: Theme.of(context).textTheme.headline4,
+//             fontSize: 35,
+//             fontWeight: FontWeight.w700,
+//           ),
+//         );
+//       },
+//     );
+//   }
+// }
 
 // class TimeWidget extends StatelessWidget {
 //   const TimeWidget({super.key});
