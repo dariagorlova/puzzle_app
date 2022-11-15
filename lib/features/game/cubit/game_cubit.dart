@@ -26,13 +26,11 @@ class GameCubit extends Cubit<GameState> {
         numbers: listNumbers,
         stepsCount: 0,
         gameHasBegun: false,
-        playerWin: false,
         gameStartTimeInMilliSecSinceEpoch: startTime,
       ),
     );
 
     if (!_isSolvable()) {
-      // on start check if shiffles list of numbers can be solvable
       const lastElement = 16;
       var zeroPos = -1;
       for (final element in state.numbers) {
@@ -56,9 +54,6 @@ class GameCubit extends Cubit<GameState> {
 
       emit(state.copyWith(numbers: tmpList));
     }
-
-    //final boxes = calculateBoxCoords(0, 0, 50, 10);
-    //emit(state.copyWith(boxes: boxes));
   }
 
   List<BoxWithCoord> calculateBoxCoords(
@@ -100,21 +95,56 @@ class GameCubit extends Cubit<GameState> {
     return listBoxes;
   }
 
-  // void swapedBoxes(List<BoxWithCoord> list) {
-  //   final s = state.stepsCount + 1;
-  //   emit(state.copyWith(stepsCount: s));
-
-  //   if (isPuzzleSolved()) {
-  //     emit(state.copyWith(gameHasBegun: false, playerWin: true));
-  //   }
-  // }
-
-  void swapBoxes(
-    int curNum,
-    List<BoxWithCoord> listBoxes,
+  void fillInitialCoordList_new(
+    int startX,
     int boxWidth,
-    int spaceBetweenBoxes,
   ) {
+    final listBoxes = <BoxWithCoord>[];
+    final gameData = state.numbers;
+    const startY = 0;
+    final spaceBetweenBoxes = boxWidth ~/ 5;
+
+    for (var i = 0; i < 16; i++) {
+      var coordX = startX;
+      var coordY = startY;
+
+      if (i >= 0 && i < 4) {
+        coordX = startX + i * (boxWidth + spaceBetweenBoxes);
+        coordY = startY;
+      } else if (i >= 4 && i < 8) {
+        coordX = startX + (i - 4) * (boxWidth + spaceBetweenBoxes);
+        coordY = startY + (boxWidth + spaceBetweenBoxes);
+      } else if (i >= 8 && i < 12) {
+        coordX = startX + (i - 8) * (boxWidth + spaceBetweenBoxes);
+        coordY = startY + 2 * (boxWidth + spaceBetweenBoxes);
+      } else if (i >= 12 && i < 16) {
+        coordX = startX + (i - 12) * (boxWidth + spaceBetweenBoxes);
+        coordY = startY + 3 * (boxWidth + spaceBetweenBoxes);
+      }
+
+      listBoxes.add(
+        BoxWithCoord(
+          coordX: coordX.toDouble(),
+          coordY: coordY.toDouble(),
+          text: gameData[i],
+        ),
+      );
+    }
+    emit(state.copyWith(listBoxes: listBoxes));
+  }
+
+  void swapBoxes_new(
+    int index,
+    int boxWidth,
+    int startX,
+  ) {
+    var listBoxes = List.generate(
+      state.listBoxes.length,
+      (index) => state.listBoxes.elementAt(index),
+    );
+    final curNum = listBoxes.elementAt(index).text;
+    final spaceBetweenBoxes = boxWidth ~/ 5;
+
     final curElement =
         listBoxes.firstWhere((element) => element.text == curNum);
     final curElementIndex =
@@ -171,15 +201,94 @@ class GameCubit extends Cubit<GameState> {
         ),
       );
 
-      //if (isPuzzleCompleted()) {
-      //  emit(state.copyWith(gameHasBegun: false, playerWin: true));
-      //}
+      final initList = fillInitialCoordListEmpty(
+        startX,
+        boxWidth,
+      );
+      final res = isPuzzleCompleted(
+        initList,
+        listBoxes,
+      );
+      if (res) {
+        // GAME OVER
+        fillInitialCoordList_new(
+          startX,
+          boxWidth,
+        );
+      } else {
+        emit(state.copyWith(listBoxes: listBoxes));
+      }
     }
   }
 
-  void gameFinished() {
-    emit(state.copyWith(gameHasBegun: false, playerWin: true));
-  }
+  // void swapBoxes(
+  //   int curNum,
+  //   List<BoxWithCoord> listBoxes,
+  //   int boxWidth,
+  //   int spaceBetweenBoxes,
+  // ) {
+  //   final curElement =
+  //       listBoxes.firstWhere((element) => element.text == curNum);
+  //   final curElementIndex =
+  //       listBoxes.indexWhere((element) => element == curElement);
+  //   final coordMidXcur = curElement.coordX + boxWidth / 2;
+  //   final coordMidYcur = curElement.coordY + boxWidth / 2;
+
+  //   final emptyElement = listBoxes.firstWhere((element) =>
+  //element.text == 16);
+  //   final emptyIndex =
+  //       listBoxes.indexWhere((element) => element == emptyElement);
+  //   final coordMidXempty = emptyElement.coordX + boxWidth / 2;
+  //   final coordMidYempty = emptyElement.coordY + boxWidth / 2;
+
+  //   var canSwap = false;
+  //   final boxWidthAndSpaceBetween = boxWidth + spaceBetweenBoxes;
+
+  //   // can move current to right
+  //   if ((coordMidXcur + boxWidthAndSpaceBetween) == coordMidXempty &&
+  //       coordMidYcur == coordMidYempty) {
+  //     canSwap = true;
+  //   }
+  //   // can move current to down
+  //   if (coordMidXcur == coordMidXempty &&
+  //       (coordMidYcur + boxWidthAndSpaceBetween) == coordMidYempty) {
+  //     canSwap = true;
+  //   }
+  //   // can move current to left
+  //   if ((coordMidXcur - boxWidthAndSpaceBetween) == coordMidXempty &&
+  //       coordMidYcur == coordMidYempty) {
+  //     canSwap = true;
+  //   }
+  //   // can move current to top
+  //   if (coordMidXcur == coordMidXempty &&
+  //       (coordMidYcur - boxWidthAndSpaceBetween) == coordMidYempty) {
+  //     canSwap = true;
+  //   }
+
+  //   if (canSwap) {
+  //     listBoxes[curElementIndex] = BoxWithCoord(
+  //       coordX: emptyElement.coordX,
+  //       coordY: emptyElement.coordY,
+  //       text: curElement.text,
+  //     );
+  //     listBoxes[emptyIndex] = BoxWithCoord(
+  //       coordX: curElement.coordX,
+  //       coordY: curElement.coordY,
+  //       text: emptyElement.text,
+  //     );
+
+  //     final s = state.stepsCount + 1;
+  //     emit(
+  //       state.copyWith(
+  //         stepsCount: s,
+  //       ),
+  //     );
+  //   }
+  // }
+
+  // void gameFinished() {
+  //   emit(state.copyWith(gameHasBegun: false, playerWin: true));
+  // }
 
   bool isPuzzleCompleted(
     List<BoxWithCoord> list1,
@@ -202,16 +311,58 @@ class GameCubit extends Cubit<GameState> {
     return result;
   }
 
-  List<BoxWithCoord> fillInitialList(
+  // void fillInitialCoordList(
+  //   int startX,
+  //   int startY,
+  //   int boxWidth,
+  //   int spaceBetweenBoxes,
+  //   List<int> gameData,
+  // ) {
+  //   final listBoxes = <BoxWithCoord>[];
+
+  //   //final gameData = state.numbers;
+
+  //   for (var i = 0; i < 16; i++) {
+  //     var coordX = startX;
+  //     var coordY = startY;
+
+  //     if (i >= 0 && i < 4) {
+  //       coordX = startX + i * (boxWidth + spaceBetweenBoxes);
+  //       coordY = startY;
+  //     } else if (i >= 4 && i < 8) {
+  //       coordX = startX + (i - 4) * (boxWidth + spaceBetweenBoxes);
+  //       coordY = startY + (boxWidth + spaceBetweenBoxes);
+  //     } else if (i >= 8 && i < 12) {
+  //       coordX = startX + (i - 8) * (boxWidth + spaceBetweenBoxes);
+  //       coordY = startY + 2 * (boxWidth + spaceBetweenBoxes);
+  //     } else if (i >= 12 && i < 16) {
+  //       coordX = startX + (i - 12) * (boxWidth + spaceBetweenBoxes);
+  //       coordY = startY + 3 * (boxWidth + spaceBetweenBoxes);
+  //     }
+
+  //     listBoxes.add(
+  //       BoxWithCoord(
+  //         coordX: coordX.toDouble(),
+  //         coordY: coordY.toDouble(),
+  //         text: gameData[i],
+  //       ),
+  //     );
+  //   }
+  //   //return listBoxes;
+  //   emit(state.copyWith(listBoxes: listBoxes));
+  // }
+
+  List<BoxWithCoord> fillInitialCoordListEmpty(
     int startX,
-    int startY,
+    //int startY,
     int boxWidth,
-    int spaceBetweenBoxes,
-    List<int> gameData,
+    //int spaceBetweenBoxes,
+    //List<int> gameData,
   ) {
     final listBoxes = <BoxWithCoord>[];
-
-    //final gameData = state.numbers;
+    const startY = 0;
+    final spaceBetweenBoxes = boxWidth ~/ 5;
+    final gameData = List<int>.generate(16, (index) => index + 1);
 
     for (var i = 0; i < 16; i++) {
       var coordX = startX;
@@ -260,8 +411,25 @@ class GameCubit extends Cubit<GameState> {
     );
   }
 
+  // void gameReStart() {
+  //   //final startTime = DateTime.now().millisecondsSinceEpoch;
+
+  //   emit(
+  //     state.copyWith(
+  //       gameHasBegun: false,
+  //       stepsCount: 0,
+  //       //gameStartTimeInMilliSecSinceEpoch: startTime,
+  //     ),
+  //   );
+  //   init();
+  // }
+
   void gameOver() {
-    emit(state.copyWith(gameHasBegun: false, playerWin: true));
+    emit(
+      state.copyWith(
+        gameHasBegun: false,
+      ),
+    );
 
     final gameDuration = getGameDuration();
     final steps = state.stepsCount as int;
@@ -283,14 +451,17 @@ class GameCubit extends Cubit<GameState> {
   }
 
   void newGame() {
-    init();
+    restartGame();
 
     _router.pop();
   }
 
   void restartGame() {
+    final oldCoord = state.listBoxes;
+    // calculate startX and boxWidth from oldCoord
+
     init();
-    gameStart();
+    fillInitialCoordList_new(25, 65);
   }
 
   /////////////////////////
@@ -332,64 +503,64 @@ class GameCubit extends Cubit<GameState> {
     return inversions.isEven;
   }
 
-  void swapParts(int curIndex) {
-    if (!state.gameHasBegun) {
-      gameStart();
-    }
+  // void swapParts(int curIndex) {
+  //   if (!state.gameHasBegun) {
+  //     gameStart();
+  //   }
 
-    const lastElement = 16;
-    //var puzzleData = state.numbers;
-    final puzzleData = List.generate(
-      state.numbers.length,
-      (index) => state.numbers.elementAt(index),
-    );
-    var swapWith = -1;
-    //UP curIndex-matrixSize
-    if (curIndex - 4 > -1) {
-      if (puzzleData[curIndex - 4] == lastElement) {
-        swapWith = curIndex - 4;
-      }
-    }
+  //   const lastElement = 16;
+  //   //var puzzleData = state.numbers;
+  //   final puzzleData = List.generate(
+  //     state.numbers.length,
+  //     (index) => state.numbers.elementAt(index),
+  //   );
+  //   var swapWith = -1;
+  //   //UP curIndex-matrixSize
+  //   if (curIndex - 4 > -1) {
+  //     if (puzzleData[curIndex - 4] == lastElement) {
+  //       swapWith = curIndex - 4;
+  //     }
+  //   }
 
-    //DOWN curIndex+matrixSize
-    if (curIndex + 4 < lastElement) {
-      if (puzzleData[curIndex + 4] == lastElement) {
-        swapWith = curIndex + 4;
-      }
-    }
+  //   //DOWN curIndex+matrixSize
+  //   if (curIndex + 4 < lastElement) {
+  //     if (puzzleData[curIndex + 4] == lastElement) {
+  //       swapWith = curIndex + 4;
+  //     }
+  //   }
 
-    //LEFT curIndex-1
-    if (curIndex - 1 > -1 && (curIndex ~/ 4) == ((curIndex - 1) ~/ 4)) {
-      if (puzzleData[curIndex - 1] == lastElement) {
-        swapWith = curIndex - 1;
-      }
-    }
+  //   //LEFT curIndex-1
+  //   if (curIndex - 1 > -1 && (curIndex ~/ 4) == ((curIndex - 1) ~/ 4)) {
+  //     if (puzzleData[curIndex - 1] == lastElement) {
+  //       swapWith = curIndex - 1;
+  //     }
+  //   }
 
-    //RIGHT curIndex+1
-    if (curIndex + 1 < lastElement &&
-        (curIndex ~/ 4) == ((curIndex + 1) ~/ 4)) {
-      if (puzzleData[curIndex + 1] == lastElement) {
-        swapWith = curIndex + 1;
-      }
-    }
+  //   //RIGHT curIndex+1
+  //   if (curIndex + 1 < lastElement &&
+  //       (curIndex ~/ 4) == ((curIndex + 1) ~/ 4)) {
+  //     if (puzzleData[curIndex + 1] == lastElement) {
+  //       swapWith = curIndex + 1;
+  //     }
+  //   }
 
-    if (swapWith != -1) {
-      final temp = puzzleData[curIndex];
-      puzzleData[curIndex] = puzzleData[swapWith];
-      puzzleData[swapWith] = temp;
+  //   if (swapWith != -1) {
+  //     final temp = puzzleData[curIndex];
+  //     puzzleData[curIndex] = puzzleData[swapWith];
+  //     puzzleData[swapWith] = temp;
 
-      final counts = state.stepsCount as int;
-      emit(
-        state.copyWith(
-          stepsCount: counts + 1,
-          numbers: puzzleData,
-        ),
-      );
+  //     final counts = state.stepsCount as int;
+  //     emit(
+  //       state.copyWith(
+  //         stepsCount: counts + 1,
+  //         numbers: puzzleData,
+  //       ),
+  //     );
 
-      if (isPuzzleSolved()) {
-        //gameOver();
-        emit(state.copyWith(gameHasBegun: false, playerWin: true));
-      }
-    }
-  }
+  //     if (isPuzzleSolved()) {
+  //       //gameOver();
+  //       emit(state.copyWith(gameHasBegun: false, playerWin: true));
+  //     }
+  //   }
+  // }
 }
