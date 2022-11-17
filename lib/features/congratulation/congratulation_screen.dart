@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:puzzle_app/di/injection.dart';
 import 'package:puzzle_app/features/game/cubit/game_cubit.dart';
+import 'package:puzzle_app/features/game/widgets/gradient_button.dart';
 import 'package:puzzle_app/localization/localization.dart';
 
 class CongratulationScreen extends StatelessWidget {
@@ -71,13 +73,32 @@ class CongratulationScreenView extends StatelessWidget {
                   height: 20,
                 ),
                 Center(
-                  child: ElevatedButton(
-                    onPressed: () {
+                  // child: ElevatedButton(
+                  //   onPressed: () {
+                  //     context.read<GameCubit>().newGame();
+                  //   },
+                  //   child: Text(
+                  //     t.playAgain,
+                  //   ),
+                  // ),
+                  child: GradientButton(
+                    // title: Text(
+                    //   t.playAgain,
+                    //   textAlign: TextAlign.center,
+                    //   style: GoogleFonts.merienda(
+                    //     textStyle: Theme.of(context).textTheme.titleSmall,
+                    //     color: Colors.white,
+                    //     //fontSize: 35,
+                    //     //fontWeight: FontWeight.w700,
+                    //   ),
+                    // ),
+                    title: Icon(
+                      Icons.replay,
+                      color: Theme.of(context).dialogBackgroundColor,
+                    ),
+                    funcOnTap: () {
                       context.read<GameCubit>().newGame();
                     },
-                    child: Text(
-                      t.playAgain,
-                    ),
                   ),
                 ),
               ],
@@ -107,37 +128,48 @@ class ResultColumn extends StatelessWidget {
       children: [
         Text(
           t.congratulationText,
-          style: TextStyle(
-            fontSize: 37,
-            fontWeight: FontWeight.bold,
+          style: GoogleFonts.merienda(
+            textStyle: Theme.of(context).textTheme.headline3,
+            //fontSize: 35,
             color: Theme.of(context).dialogBackgroundColor,
-          ),
-        ),
-        Text(
-          t.yourResultsText,
-          style: TextStyle(
-            fontSize: 27,
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).dialogBackgroundColor,
           ),
         ),
         const SizedBox(
           height: 30,
         ),
+        Text(
+          '${t.yourResultsText}:',
+          style: GoogleFonts.merienda(
+            textStyle: Theme.of(context).textTheme.headline5,
+            //fontSize: 27,
+            color: Theme.of(context).cardColor,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        // const SizedBox(
+        //   height: 10,
+        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               Icons.alarm,
               size: 32,
-              color: Theme.of(context).dialogBackgroundColor,
+              color: Theme.of(context).cardColor,
             ),
             Text(
               t.timeText,
-              style: TextStyle(
-                fontSize: 27,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).dialogBackgroundColor,
+              // style: TextStyle(
+              //   fontSize: 27,
+              //   fontWeight: FontWeight.bold,
+              //   color: Theme.of(context).dialogBackgroundColor,
+              // ),
+              style: GoogleFonts.merienda(
+                textStyle: Theme.of(context).textTheme.headline5,
+                //fontSize: 27,
+                color: Theme.of(context).cardColor,
+                fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(
@@ -145,10 +177,11 @@ class ResultColumn extends StatelessWidget {
             ),
             Text(
               durationText,
-              style: TextStyle(
-                fontSize: 27,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).dialogBackgroundColor,
+              style: GoogleFonts.merienda(
+                textStyle: Theme.of(context).textTheme.headline5,
+                //fontSize: 27,
+                color: Theme.of(context).cardColor,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
@@ -162,14 +195,15 @@ class ResultColumn extends StatelessWidget {
             Icon(
               Icons.swap_horiz_rounded,
               size: 32,
-              color: Theme.of(context).dialogBackgroundColor,
+              color: Theme.of(context).cardColor,
             ),
             Text(
               t.stepsText,
-              style: TextStyle(
-                fontSize: 27,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).dialogBackgroundColor,
+              style: GoogleFonts.merienda(
+                textStyle: Theme.of(context).textTheme.headline5,
+                //fontSize: 27,
+                color: Theme.of(context).cardColor,
+                fontWeight: FontWeight.w700,
               ),
             ),
             const SizedBox(
@@ -177,10 +211,11 @@ class ResultColumn extends StatelessWidget {
             ),
             Text(
               stepsText,
-              style: TextStyle(
-                fontSize: 27,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).dialogBackgroundColor,
+              style: GoogleFonts.merienda(
+                textStyle: Theme.of(context).textTheme.headline5,
+                //fontSize: 27,
+                color: Theme.of(context).cardColor,
+                fontWeight: FontWeight.w700,
               ),
             ),
           ],
