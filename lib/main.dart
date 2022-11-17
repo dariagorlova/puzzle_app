@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         //scaffoldBackgroundColor: Colors.yellow.shade50,
-        cardColor: Colors.yellow.shade600,
+        cardColor: Colors.brown,
       ),
       localizationsDelegates: const [
         AppLocalizations.delegate,
