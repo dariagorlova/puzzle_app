@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$GameState {
   List<int> get numbers => throw _privateConstructorUsedError;
+  List<BoxWithCoord> get listBoxes => throw _privateConstructorUsedError;
   dynamic get stepsCount => throw _privateConstructorUsedError;
   bool get gameHasBegun => throw _privateConstructorUsedError;
   bool get playerWin => throw _privateConstructorUsedError;
@@ -34,6 +35,7 @@ abstract class $GameStateCopyWith<$Res> {
       _$GameStateCopyWithImpl<$Res>;
   $Res call(
       {List<int> numbers,
+      List<BoxWithCoord> listBoxes,
       dynamic stepsCount,
       bool gameHasBegun,
       bool playerWin,
@@ -51,6 +53,7 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
   @override
   $Res call({
     Object? numbers = freezed,
+    Object? listBoxes = freezed,
     Object? stepsCount = freezed,
     Object? gameHasBegun = freezed,
     Object? playerWin = freezed,
@@ -61,6 +64,10 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
           ? _value.numbers
           : numbers // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      listBoxes: listBoxes == freezed
+          ? _value.listBoxes
+          : listBoxes // ignore: cast_nullable_to_non_nullable
+              as List<BoxWithCoord>,
       stepsCount: stepsCount == freezed
           ? _value.stepsCount
           : stepsCount // ignore: cast_nullable_to_non_nullable
@@ -90,6 +97,7 @@ abstract class _$$_GameStateCopyWith<$Res> implements $GameStateCopyWith<$Res> {
   @override
   $Res call(
       {List<int> numbers,
+      List<BoxWithCoord> listBoxes,
       dynamic stepsCount,
       bool gameHasBegun,
       bool playerWin,
@@ -109,6 +117,7 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? numbers = freezed,
+    Object? listBoxes = freezed,
     Object? stepsCount = freezed,
     Object? gameHasBegun = freezed,
     Object? playerWin = freezed,
@@ -119,6 +128,10 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
           ? _value._numbers
           : numbers // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      listBoxes: listBoxes == freezed
+          ? _value._listBoxes
+          : listBoxes // ignore: cast_nullable_to_non_nullable
+              as List<BoxWithCoord>,
       stepsCount: stepsCount == freezed ? _value.stepsCount : stepsCount,
       gameHasBegun: gameHasBegun == freezed
           ? _value.gameHasBegun
@@ -141,11 +154,13 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
 class _$_GameState implements _GameState {
   const _$_GameState(
       {final List<int> numbers = const [],
+      final List<BoxWithCoord> listBoxes = const [],
       this.stepsCount = 0,
       this.gameHasBegun = false,
       this.playerWin = false,
       this.gameStartTimeInMilliSecSinceEpoch = 0})
-      : _numbers = numbers;
+      : _numbers = numbers,
+        _listBoxes = listBoxes;
 
   final List<int> _numbers;
   @override
@@ -153,6 +168,14 @@ class _$_GameState implements _GameState {
   List<int> get numbers {
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_numbers);
+  }
+
+  final List<BoxWithCoord> _listBoxes;
+  @override
+  @JsonKey()
+  List<BoxWithCoord> get listBoxes {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_listBoxes);
   }
 
   @override
@@ -170,7 +193,7 @@ class _$_GameState implements _GameState {
 
   @override
   String toString() {
-    return 'GameState(numbers: $numbers, stepsCount: $stepsCount, gameHasBegun: $gameHasBegun, playerWin: $playerWin, gameStartTimeInMilliSecSinceEpoch: $gameStartTimeInMilliSecSinceEpoch)';
+    return 'GameState(numbers: $numbers, listBoxes: $listBoxes, stepsCount: $stepsCount, gameHasBegun: $gameHasBegun, playerWin: $playerWin, gameStartTimeInMilliSecSinceEpoch: $gameStartTimeInMilliSecSinceEpoch)';
   }
 
   @override
@@ -179,6 +202,8 @@ class _$_GameState implements _GameState {
         (other.runtimeType == runtimeType &&
             other is _$_GameState &&
             const DeepCollectionEquality().equals(other._numbers, _numbers) &&
+            const DeepCollectionEquality()
+                .equals(other._listBoxes, _listBoxes) &&
             const DeepCollectionEquality()
                 .equals(other.stepsCount, stepsCount) &&
             const DeepCollectionEquality()
@@ -193,6 +218,7 @@ class _$_GameState implements _GameState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_numbers),
+      const DeepCollectionEquality().hash(_listBoxes),
       const DeepCollectionEquality().hash(stepsCount),
       const DeepCollectionEquality().hash(gameHasBegun),
       const DeepCollectionEquality().hash(playerWin),
@@ -207,6 +233,7 @@ class _$_GameState implements _GameState {
 abstract class _GameState implements GameState {
   const factory _GameState(
       {final List<int> numbers,
+      final List<BoxWithCoord> listBoxes,
       final dynamic stepsCount,
       final bool gameHasBegun,
       final bool playerWin,
@@ -214,6 +241,8 @@ abstract class _GameState implements GameState {
 
   @override
   List<int> get numbers;
+  @override
+  List<BoxWithCoord> get listBoxes;
   @override
   dynamic get stepsCount;
   @override

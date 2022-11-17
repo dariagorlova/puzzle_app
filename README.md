@@ -1,16 +1,18 @@
-# puzzle_app
+# FutterPuzzle
 
-A new Flutter project.
+Flutter version of the famous game "collect in order".
 
-## Getting Started
+## The game rules.
 
-This project is a starting point for a Flutter application.
+The game starts when any tile is moved for the first time. Time and steps count are taken into account. The game ends, when all of the tiles are placed in ascending order and the last one contains an empty space. You can restart the game anytime.
+## Endgame.
 
-A few resources to get you started if this is your first Flutter project:
+The “Congratulations” page appears, when the puzzle is solved. The additional information on this page:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+* Time, spent for puzzle solving
+* Number of steps
+* “Restart game” button
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+- [](https://docs.flutter.dev/get-started/codelab)
+

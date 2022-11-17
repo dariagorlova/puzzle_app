@@ -34,10 +34,11 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp.router(
       title: 'Puzzle',
       locale: widget.locale,
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
         //scaffoldBackgroundColor: Colors.yellow.shade50,
-        cardColor: Colors.yellow.shade600,
+        cardColor: Colors.brown,
       ),
       localizationsDelegates: const [
         AppLocalizations.delegate,
