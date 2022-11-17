@@ -21,14 +21,14 @@ class _GameFieldState extends State<GameField> {
   //List<BoxWithCoord> initlistBoxes = <BoxWithCoord>[];
 
   //final startY = 0;
-  int spaceBetweenBoxes = 0;
+  //int spaceBetweenBoxes = 0;
 
   @override
   void initState() {
     super.initState();
-    context.read<GameCubit>().fillInitialCoordList_new(
+    context.read<GameCubit>().fillInitialCoordList_neww(
           widget.startX,
-          widget.boxWidth,
+          widget.boxWidth + widget.boxWidth ~/ 5,
         );
 
     // final gameData = context.read<GameCubit>().state.numbers;
@@ -62,11 +62,21 @@ class _GameFieldState extends State<GameField> {
                   context.read<GameCubit>().gameStart();
                 }
 
+                final oldGameState =
+                    context.read<GameCubit>().state.gameHasBegun;
+
                 context.read<GameCubit>().swapBoxes_new(
                       index,
                       widget.boxWidth,
                       widget.startX,
                     );
+
+                if (oldGameState !=
+                    context.read<GameCubit>().state.gameHasBegun) {
+                  context.read<GameCubit>().restartGame();
+
+                  //context.read<TimerBloc>().add(const TimerReset());
+                }
                 // context.read<GameCubit>().swapBoxes(
                 //       listBoxes[index].text,
                 //       listBoxes,

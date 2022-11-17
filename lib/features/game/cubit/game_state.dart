@@ -10,7 +10,7 @@ class GameState with _$GameState {
     @Default([]) List<BoxWithCoord> listBoxes,
     @Default(0) stepsCount,
     @Default(false) bool gameHasBegun,
-    //@Default(false) bool playerWin,
+    @Default(false) bool playerWin,
     @Default(0) gameStartTimeInMilliSecSinceEpoch,
   }) = _GameState;
 }

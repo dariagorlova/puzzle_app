@@ -8,6 +8,8 @@ import 'package:puzzle_app/features/game/widgets/timer/bloc/timer_bloc.dart';
 import 'package:puzzle_app/features/game/widgets/timer/util/ticker.dart';
 import 'package:puzzle_app/localization/localization.dart';
 
+const gameDuration = 600;
+
 class TimerWidget extends StatelessWidget {
   const TimerWidget({super.key});
   @override
@@ -32,9 +34,12 @@ class TimerText extends StatelessWidget {
   const TimerText({super.key});
   @override
   Widget build(BuildContext context) {
-    final duration = context.select((TimerBloc bloc) => bloc.state.duration);
+    var duration =
+        context.select((TimerBloc bloc) => bloc.state.duration) - gameDuration;
+    //if (duration == gameDuration) duration = 0;
+
     final minutesStr =
-        (((duration / 60) % 60).floor() - 600).toString().padLeft(2, '0');
+        (((duration / 60) % 60).floor()).toString().padLeft(2, '0');
 
     // ignore: noop_primitive_operations
     final secondsStr = (duration % 60).floor().toString().padLeft(2, '0');
@@ -67,15 +72,24 @@ class Actions extends StatelessWidget {
                 if (state.gameHasBegun) {
                   context
                       .read<TimerBloc>()
-                      .add(const TimerStarted(duration: 600));
+                      .add(const TimerStarted(duration: gameDuration));
                 }
               },
-              child: GradientButton(
-                title: const Icon(Icons.replay),
-                funcOnTap: () {
-                  context.read<TimerBloc>().add(const TimerReset());
-                  context.read<GameCubit>().restartGame();
+              child: BlocListener<GameCubit, GameState>(
+                listenWhen: (previous, current) =>
+                    !previous.playerWin && current.playerWin,
+                listener: (context, state) {
+                  if (state.playerWin) {
+                    context.read<TimerBloc>().add(const TimerReset());
+                  }
                 },
+                child: GradientButton(
+                  title: const Icon(Icons.replay),
+                  funcOnTap: () {
+                    context.read<TimerBloc>().add(const TimerReset());
+                    context.read<GameCubit>().restartGame();
+                  },
+                ),
               ),
             ),
           ],

@@ -26,6 +26,7 @@ class GameCubit extends Cubit<GameState> {
         numbers: listNumbers,
         stepsCount: 0,
         gameHasBegun: false,
+        playerWin: false,
         gameStartTimeInMilliSecSinceEpoch: startTime,
       ),
     );
@@ -95,31 +96,37 @@ class GameCubit extends Cubit<GameState> {
     return listBoxes;
   }
 
-  void fillInitialCoordList_new(
+  void fillInitialCoordList_neww(
     int startX,
-    int boxWidth,
+    int boxWidthWithSpace,
   ) {
     final listBoxes = <BoxWithCoord>[];
     final gameData = state.numbers;
     const startY = 0;
-    final spaceBetweenBoxes = boxWidth ~/ 5;
+    //final spaceBetweenBoxes = boxWidth ~/ 5;
 
     for (var i = 0; i < 16; i++) {
       var coordX = startX;
       var coordY = startY;
 
       if (i >= 0 && i < 4) {
-        coordX = startX + i * (boxWidth + spaceBetweenBoxes);
+        coordX =
+            startX + i * boxWidthWithSpace; //(boxWidth + spaceBetweenBoxes);
         coordY = startY;
       } else if (i >= 4 && i < 8) {
-        coordX = startX + (i - 4) * (boxWidth + spaceBetweenBoxes);
-        coordY = startY + (boxWidth + spaceBetweenBoxes);
+        coordX = startX +
+            (i - 4) * boxWidthWithSpace; //(boxWidth + spaceBetweenBoxes);
+        coordY = startY + boxWidthWithSpace; //(boxWidth + spaceBetweenBoxes);
       } else if (i >= 8 && i < 12) {
-        coordX = startX + (i - 8) * (boxWidth + spaceBetweenBoxes);
-        coordY = startY + 2 * (boxWidth + spaceBetweenBoxes);
+        coordX = startX +
+            (i - 8) * boxWidthWithSpace; //(boxWidth + spaceBetweenBoxes);
+        coordY =
+            startY + 2 * boxWidthWithSpace; //(boxWidth + spaceBetweenBoxes);
       } else if (i >= 12 && i < 16) {
-        coordX = startX + (i - 12) * (boxWidth + spaceBetweenBoxes);
-        coordY = startY + 3 * (boxWidth + spaceBetweenBoxes);
+        coordX = startX +
+            (i - 12) * boxWidthWithSpace; //(boxWidth + spaceBetweenBoxes);
+        coordY =
+            startY + 3 * boxWidthWithSpace; //(boxWidth + spaceBetweenBoxes);
       }
 
       listBoxes.add(
@@ -211,10 +218,11 @@ class GameCubit extends Cubit<GameState> {
       );
       if (res) {
         // GAME OVER
-        fillInitialCoordList_new(
+        fillInitialCoordList_neww(
           startX,
-          boxWidth,
+          boxWidth + boxWidth ~/ 5,
         );
+        emit(state.copyWith(playerWin: true));
       } else {
         emit(state.copyWith(listBoxes: listBoxes));
       }
@@ -406,6 +414,7 @@ class GameCubit extends Cubit<GameState> {
     emit(
       state.copyWith(
         gameHasBegun: true,
+        playerWin: false,
         gameStartTimeInMilliSecSinceEpoch: startTime,
       ),
     );
@@ -428,6 +437,7 @@ class GameCubit extends Cubit<GameState> {
     emit(
       state.copyWith(
         gameHasBegun: false,
+        playerWin: true,
       ),
     );
 
@@ -451,17 +461,29 @@ class GameCubit extends Cubit<GameState> {
   }
 
   void newGame() {
-    restartGame();
-
     _router.pop();
+    restartGameFromScratch();
+  }
+
+  void restartGameFromScratch() {
+    init();
+    fillInitialCoordList_neww(25, 65);
   }
 
   void restartGame() {
     final oldCoord = state.listBoxes;
     // calculate startX and boxWidth from oldCoord
+    var allX = List.generate(
+      oldCoord.length,
+      (index) => oldCoord.elementAt(index).coordX,
+    );
+    allX.sort();
+    var oldStartX = allX.elementAt(0).toInt();
+    var boxWidth = (allX.elementAt(4) - allX.elementAt(0)).toInt();
 
     init();
-    fillInitialCoordList_new(25, 65);
+    //fillInitialCoordList_new(25, 65);
+    fillInitialCoordList_neww(oldStartX, boxWidth);
   }
 
   /////////////////////////
