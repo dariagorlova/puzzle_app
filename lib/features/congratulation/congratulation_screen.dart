@@ -40,7 +40,6 @@ class CongratulationScreenView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final t = AppLocalizations.of(context);
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       body: Flex(
@@ -73,25 +72,7 @@ class CongratulationScreenView extends StatelessWidget {
                   height: 20,
                 ),
                 Center(
-                  // child: ElevatedButton(
-                  //   onPressed: () {
-                  //     context.read<GameCubit>().newGame();
-                  //   },
-                  //   child: Text(
-                  //     t.playAgain,
-                  //   ),
-                  // ),
                   child: GradientButton(
-                    // title: Text(
-                    //   t.playAgain,
-                    //   textAlign: TextAlign.center,
-                    //   style: GoogleFonts.merienda(
-                    //     textStyle: Theme.of(context).textTheme.titleSmall,
-                    //     color: Colors.white,
-                    //     //fontSize: 35,
-                    //     //fontWeight: FontWeight.w700,
-                    //   ),
-                    // ),
                     title: Icon(
                       Icons.replay,
                       color: Theme.of(context).dialogBackgroundColor,
@@ -130,7 +111,6 @@ class ResultColumn extends StatelessWidget {
           t.congratulationText,
           style: GoogleFonts.merienda(
             textStyle: Theme.of(context).textTheme.headline3,
-            //fontSize: 35,
             color: Theme.of(context).dialogBackgroundColor,
             fontWeight: FontWeight.bold,
           ),
@@ -147,9 +127,6 @@ class ResultColumn extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // const SizedBox(
-        //   height: 10,
-        // ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -160,14 +137,8 @@ class ResultColumn extends StatelessWidget {
             ),
             Text(
               t.timeText,
-              // style: TextStyle(
-              //   fontSize: 27,
-              //   fontWeight: FontWeight.bold,
-              //   color: Theme.of(context).dialogBackgroundColor,
-              // ),
               style: GoogleFonts.merienda(
                 textStyle: Theme.of(context).textTheme.headline5,
-                //fontSize: 27,
                 color: Theme.of(context).cardColor,
                 fontWeight: FontWeight.w700,
               ),
@@ -179,7 +150,6 @@ class ResultColumn extends StatelessWidget {
               durationText,
               style: GoogleFonts.merienda(
                 textStyle: Theme.of(context).textTheme.headline5,
-                //fontSize: 27,
                 color: Theme.of(context).cardColor,
                 fontWeight: FontWeight.w700,
               ),
@@ -201,7 +171,6 @@ class ResultColumn extends StatelessWidget {
               t.stepsText,
               style: GoogleFonts.merienda(
                 textStyle: Theme.of(context).textTheme.headline5,
-                //fontSize: 27,
                 color: Theme.of(context).cardColor,
                 fontWeight: FontWeight.w700,
               ),
@@ -213,7 +182,6 @@ class ResultColumn extends StatelessWidget {
               stepsText,
               style: GoogleFonts.merienda(
                 textStyle: Theme.of(context).textTheme.headline5,
-                //fontSize: 27,
                 color: Theme.of(context).cardColor,
                 fontWeight: FontWeight.w700,
               ),

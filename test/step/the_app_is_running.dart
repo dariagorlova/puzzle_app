@@ -4,6 +4,8 @@ import 'package:injectable/injectable.dart';
 import 'package:puzzle_app/di/injection.dart' as di;
 import 'package:puzzle_app/main.dart';
 
+import '../util/mock_common_finctions.dart';
+
 Future<void> theAppIsRunning(WidgetTester tester) async {
   await di.getIt.reset();
   di.configureInjection(Environment.test);
@@ -13,4 +15,9 @@ Future<void> theAppIsRunning(WidgetTester tester) async {
     ),
   );
   await tester.pumpAndSettle();
+
+  di.getIt
+    ..allowReassignment = true
+    ..registerSingleton(getCommonFunctions())
+    ..allowReassignment = false;
 }
