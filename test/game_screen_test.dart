@@ -8,6 +8,7 @@ import './step/the_app_is_running.dart';
 import './step/i_see_text.dart';
 import './step/i_see_icon.dart';
 import './step/i_tap_text.dart';
+import './step/i_wait_second.dart';
 import './step/i_dont_see_text.dart';
 import './step/i_tap_icon.dart';
 import './step/i_dont_see.dart';
@@ -19,23 +20,40 @@ void main() {
   group('''Game''', () {
     testWidgets('''As a User I want to see initial text''', (tester) async {
       await bddSetUp(tester);
-      await iSeeText(tester, 'Time: 00:00');
-      await iSeeText(tester, 'Steps: 0');
       await iSeeText(tester, '1');
-      await iSeeIcon(tester, Icons.repeat);
+      await iSeeText(tester, 'Steps: 0');
+      await iSeeText(tester, 'Time: 00:00');
+      await iSeeIcon(tester, Icons.replay);
     });
-    testWidgets('''As a User I start game''', (tester) async {
+    testWidgets('''As a User I start game and chose wrong number''', (tester) async {
       await bddSetUp(tester);
       await iTapText(tester, '1');
+      await iWaitSecond(tester, 2);
+      await iSeeText(tester, 'Steps: 0');
+      await iDontSeeText(tester, 'Time: 00:00');
+    });
+    testWidgets('''As a User I start game and chose right number''', (tester) async {
+      await bddSetUp(tester);
+      await iTapText(tester, '14');
+      await iWaitSecond(tester, 2);
       await iDontSeeText(tester, 'Steps: 0');
       await iSeeText(tester, 'Steps: 1');
+      await iDontSeeText(tester, 'Time: 00:00');
     });
     testWidgets('''As a User I want to restart game''', (tester) async {
       await bddSetUp(tester);
-      await iTapText(tester, '1');
-      await iTapIcon(tester, Icons.repeat);
+      await iTapText(tester, '14');
+      await iTapIcon(tester, Icons.replay);
       await iDontSee(tester, 'Steps: 1');
       await iSeeText(tester, 'Steps: 0');
+    });
+    testWidgets('''User Win''', (tester) async {
+      await bddSetUp(tester);
+      await iTapText(tester, '14');
+      await iWaitSecond(tester, 2);
+      await iTapText(tester, '14');
+      await iWaitSecond(tester, 2);
+      await iSeeText(tester, 'Steps: 2');
     });
   });
 }
