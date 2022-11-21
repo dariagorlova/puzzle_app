@@ -36,32 +36,15 @@ class _GameScreenState extends State<_GameScreen> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      body:
-          // BlocListener<GameCubit, GameState>(
-          //   listenWhen: (previous, current) =>
-          //       !previous.playerWin && current.playerWin,
-          //   listener: (context, state) async {
-          //     // final gameDuration = context.read<GameCubit>().getGameDuration();
-          //     // await showAlertDialog(
-          //     //   context,
-          //     //   gameDuration,
-          //     //   state.stepsCount as int,
-          //     // );
-          //     if (mounted) context.read<GameCubit>().restartGame();
-          //   },
-          //   child:
-          //Stack(
-          //  children: [
-          //    const Background(),
-          screenHeight > screenWidth
-              ? VerticalView(
-                  screenHeight: screenHeight,
-                  screenWidth: screenWidth,
-                )
-              : HorizontalView(
-                  screenHeight: screenHeight,
-                  screenWidth: screenWidth,
-                ),
+      body: screenHeight > screenWidth
+          ? VerticalView(
+              screenHeight: screenHeight,
+              screenWidth: screenWidth,
+            )
+          : HorizontalView(
+              screenHeight: screenHeight,
+              screenWidth: screenWidth,
+            ),
       //  ],
       //),
       //),
@@ -115,21 +98,6 @@ class VerticalView extends StatelessWidget {
                       height: 10,
                     ),
                     TimerWidget(),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Text(
-                    //       '${AppLocalizations.of(context).timeText}: ',
-                    //       //style: const TextStyle(fontSize: 21),
-                    //       style: GoogleFonts.merienda(
-                    //         textStyle: Theme.of(context).textTheme.headline4,
-                    //         fontSize: 35,
-                    //         fontWeight: FontWeight.w700,
-                    //       ),
-                    //     ),
-                    //     const TimerWidget(),
-                    //   ],
-                    // ),
                   ],
                 ),
               ),
@@ -153,7 +121,8 @@ class HorizontalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final boxWidth = screenHeight ~/ 6;
+    //final boxWidth = screenHeight ~/ 6;
+    final boxWidth = (screenWidth / 2) ~/ 6;
     final startX =
         ((screenHeight - 40) / 2 - 2 * boxWidth - 1.5 * (boxWidth / 5)).toInt();
 
@@ -169,18 +138,18 @@ class HorizontalView extends StatelessWidget {
                 alignment: Alignment.center,
                 height: screenHeight,
                 width: boxWidth * 6, //screenWidth / 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: BlocSelector<GameCubit, GameState, List<int>>(
-                    selector: (state) => state.numbers,
-                    builder: (context, numbersData) {
-                      return GameField(
-                        startX: startX,
-                        boxWidth: boxWidth,
-                      );
-                    },
-                  ),
+                //child: Padding(
+                //  padding: const EdgeInsets.all(20),
+                child: BlocSelector<GameCubit, GameState, List<int>>(
+                  selector: (state) => state.numbers,
+                  builder: (context, numbersData) {
+                    return GameField(
+                      startX: startX,
+                      boxWidth: boxWidth,
+                    );
+                  },
                 ),
+                //),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 40),
@@ -201,97 +170,3 @@ class HorizontalView extends StatelessWidget {
     );
   }
 }
-
-// class TimeStepsColumn extends StatelessWidget {
-//   const TimeStepsColumn({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: const [
-//         //TimeWidget(),
-//         TimerWidget(),
-//         SizedBox(
-//           height: 30,
-//         ),
-//         StepsWidget(),
-//       ],
-//     );
-//   }
-// }
-
-// class StepsWidget extends StatelessWidget {
-//   const StepsWidget({
-//     super.key,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final t = AppLocalizations.of(context);
-//     return BlocSelector<GameCubit, GameState, int>(
-//       selector: (state) => state.stepsCount as int,
-//       builder: (context, stepsCount) {
-//         return Text(
-//           '${t.stepsText}: $stepsCount',
-//           style: GoogleFonts.merienda(
-//             textStyle: Theme.of(context).textTheme.headline4,
-//             fontSize: 35,
-//             fontWeight: FontWeight.w700,
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-
-// class TimeWidget extends StatelessWidget {
-//   const TimeWidget({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<UpdatetimerCubit, UpdatetimerState>(
-//       bloc: UpdatetimerCubit(),
-//       builder: (context, state) {
-//         if (state is UpdatetimerUIState) {
-//           return Column(
-//             children: [
-//               TextButton(
-//                 onPressed: () {},
-//                 child: Text('Reset'),
-//               ),
-//               Text('${state.currentTime}'),
-//             ],
-//           );
-//         }
-//         //return Text('${DateTime.now().millisecondsSinceEpoch}');
-//         return Text('${DateTime.now().millisecondsSinceEpoch}');
-//       },
-//     );
-//   }
-// }
-
-// class UpdatetimerCubit extends Cubit<UpdatetimerState> {
-//   Timer? timer;
-//   UpdatetimerCubit() : super(UpdatetimerInitial()) {
-//     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-//       print('Timer');
-//       emit(UpdatetimerUIState(DateTime.now().millisecondsSinceEpoch));
-//     });
-//   }
-//   void closeTimer() {
-//     timer?.cancel();
-//   }
-// }
-
-// @immutable
-// abstract class UpdatetimerState {}
-
-// class UpdatetimerInitial extends UpdatetimerState {}
-
-// class UpdatetimerUIState extends UpdatetimerState {
-//   final int currentTime;
-
-//   UpdatetimerUIState(this.currentTime);
-// }

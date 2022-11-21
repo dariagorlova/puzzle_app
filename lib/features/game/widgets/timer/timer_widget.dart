@@ -34,9 +34,8 @@ class TimerText extends StatelessWidget {
   const TimerText({super.key});
   @override
   Widget build(BuildContext context) {
-    var duration =
+    final duration =
         context.select((TimerBloc bloc) => bloc.state.duration) - gameDuration;
-    //if (duration == gameDuration) duration = 0;
 
     final minutesStr =
         (((duration / 60) % 60).floor()).toString().padLeft(2, '0');
@@ -45,7 +44,6 @@ class TimerText extends StatelessWidget {
     final secondsStr = (duration % 60).floor().toString().padLeft(2, '0');
     return Text(
       '${AppLocalizations.of(context).timeText}: $minutesStr:$secondsStr',
-      //style: Theme.of(context).textTheme.headline4,
       style: GoogleFonts.merienda(
         textStyle: Theme.of(context).textTheme.headline4,
         fontSize: 35,
