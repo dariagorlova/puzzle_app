@@ -131,25 +131,25 @@ class HorizontalView extends StatelessWidget {
         const Background(),
         Center(
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 alignment: Alignment.center,
                 height: screenHeight,
                 width: boxWidth * 6, //screenWidth / 2,
-                //child: Padding(
-                //  padding: const EdgeInsets.all(20),
-                child: BlocSelector<GameCubit, GameState, List<int>>(
-                  selector: (state) => state.numbers,
-                  builder: (context, numbersData) {
-                    return GameField(
-                      startX: startX,
-                      boxWidth: boxWidth,
-                    );
-                  },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: BlocSelector<GameCubit, GameState, List<int>>(
+                    selector: (state) => state.numbers,
+                    builder: (context, numbersData) {
+                      return GameField(
+                        startX: startX,
+                        boxWidth: boxWidth,
+                      );
+                    },
+                  ),
                 ),
-                //),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 40),
