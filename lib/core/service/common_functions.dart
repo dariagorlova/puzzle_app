@@ -116,14 +116,10 @@ class CommonFunctions {
 
     final curElement =
         listBoxes.firstWhere((element) => element.text == curNum);
-    final curElementIndex =
-        listBoxes.indexWhere((element) => element == curElement);
     final coordMidXcur = curElement.coordX + boxWidth / 2;
     final coordMidYcur = curElement.coordY + boxWidth / 2;
 
     final emptyElement = listBoxes.firstWhere((element) => element.text == 16);
-    final emptyIndex =
-        listBoxes.indexWhere((element) => element == emptyElement);
     final coordMidXempty = emptyElement.coordX + boxWidth / 2;
     final coordMidYempty = emptyElement.coordY + boxWidth / 2;
 
