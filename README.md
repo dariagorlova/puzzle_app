@@ -14,5 +14,5 @@ The “Congratulations” page appears, when the puzzle is solved. The additiona
 * “Restart game” button
 
 
-- [](https://docs.flutter.dev/get-started/codelab)
+[](https://github.com/dariagorlova/puzzle_app/blob/master/images/game.png)
 
