@@ -14,10 +14,15 @@ Future<void> theAppIsRunning(WidgetTester tester) async {
       locale: Locale('en'),
     ),
   );
-  await tester.pumpAndSettle();
-
   di.getIt
     ..allowReassignment = true
     ..registerSingleton(getCommonFunctions())
     ..allowReassignment = false;
+
+  await tester.pumpAndSettle();
+
+  // di.getIt
+  //   ..allowReassignment = true
+  //   ..registerSingleton(getCommonFunctions())
+  //   ..allowReassignment = false;
 }

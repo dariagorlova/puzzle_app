@@ -12,6 +12,7 @@ import './step/i_wait_second.dart';
 import './step/i_dont_see_text.dart';
 import './step/i_tap_icon.dart';
 import './step/i_dont_see.dart';
+import './step/i_wait.dart';
 
 void main() {
   Future<void> bddSetUp(WidgetTester tester) async {
@@ -51,9 +52,10 @@ void main() {
       await bddSetUp(tester);
       await iTapText(tester, '14');
       await iWaitSecond(tester, 2);
-      await iTapText(tester, '14');
-      await iWaitSecond(tester, 2);
-      await iSeeText(tester, 'Steps: 2');
+      await iTapText(tester, '15');
+      await iWait(tester);
+      await iDontSeeText(tester, '15');
+      await iSeeText(tester, 'Congratulation!');
     });
   });
 }

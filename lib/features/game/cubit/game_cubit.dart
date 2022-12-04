@@ -11,15 +11,18 @@ class GameCubit extends Cubit<GameState> {
     this._router,
     this._func,
   ) : super(
-          const GameState(
-            stepsCount: 0,
-          ),
+          const GameState(),
         ) {
     init();
   }
 
   final PuzzleNavigator _router;
   final CommonFunctions _func;
+
+  void setBoxSize(int boxSize) {
+    emit(state.copyWith(boxSize: boxSize));
+    fillInitialCoordList();
+  }
 
   void init() {
     final listNumbers = _func.createNewListOfNumbers();
@@ -60,12 +63,17 @@ class GameCubit extends Cubit<GameState> {
     }
   }
 
-  void fillInitialCoordList(
-    int startX,
-    int boxWidthWithSpace,
-  ) {
+  void boxTaped(int index) {
+    if (state.stepsCount == 0) {
+      gameStart();
+    }
+    swapBoxes(index);
+  }
+
+  void fillInitialCoordList() {
+    final boxWidthWithSpace = state.boxSize + state.boxSize ~/ 5;
+
     final listBoxes = _func.fillInitialCoordList(
-      startX,
       boxWidthWithSpace,
       state.numbers,
     );
@@ -73,16 +81,12 @@ class GameCubit extends Cubit<GameState> {
     emit(state.copyWith(listBoxes: listBoxes));
   }
 
-  void swapBoxes(
-    int index,
-    int boxWidth,
-    int startX,
-  ) {
+  void swapBoxes(int index) {
+    final boxWidth = state.boxSize;
     final listBoxes = List.generate(
       state.listBoxes.length,
       (index) => state.listBoxes.elementAt(index),
     );
-
     final curNum = listBoxes.elementAt(index).text;
 
     final curElement =
@@ -93,7 +97,7 @@ class GameCubit extends Cubit<GameState> {
     final emptyIndex =
         listBoxes.indexWhere((element) => element == emptyElement);
 
-    final canSwap = _func.canSwap(listBoxes, index, boxWidth, startX);
+    final canSwap = canSwapBoxes(listBoxes, index, boxWidth);
     if (canSwap) {
       listBoxes[curElementIndex] = BoxWithCoord(
         coordX: emptyElement.coordX,
@@ -113,29 +117,34 @@ class GameCubit extends Cubit<GameState> {
         ),
       );
 
-      final initList = _func.fillInitialCoordListEmpty(
-        startX,
-        boxWidth,
+      checkForGameOver(listBoxes);
+    }
+  }
+
+  void checkForGameOver(
+    List<BoxWithCoord> listBoxes,
+  ) {
+    final boxWidthWithSpace = state.boxSize + state.boxSize ~/ 5;
+    final initList = _func.fillInitialCoordList(
+      //startX,
+      boxWidthWithSpace,
+      List<int>.generate(16, (index) => index + 1),
+    );
+    final res = isPuzzleCompleted(
+      initList,
+      listBoxes,
+    );
+    if (res) {
+      // GAME OVER
+      fillInitialCoordList();
+      emit(
+        state.copyWith(
+          playerWin: true,
+          stepsCount: 0,
+        ),
       );
-      final res = isPuzzleCompleted(
-        initList,
-        listBoxes,
-      );
-      if (res) {
-        // GAME OVER
-        fillInitialCoordList(
-          startX,
-          boxWidth + boxWidth ~/ 5,
-        );
-        emit(
-          state.copyWith(
-            playerWin: true,
-            stepsCount: 0,
-          ),
-        );
-      } else {
-        emit(state.copyWith(listBoxes: listBoxes));
-      }
+    } else {
+      emit(state.copyWith(listBoxes: listBoxes));
     }
   }
 
@@ -143,7 +152,15 @@ class GameCubit extends Cubit<GameState> {
     List<BoxWithCoord> list1,
     List<BoxWithCoord> list2,
   ) {
-    final result = _func.isPuzzleCompleted(list1, list2);
+    var result = false;
+    for (final box in list2) {
+      final elem = list1.firstWhere((element) => element.text == box.text);
+      if (box.coordX == elem.coordX && box.coordY == elem.coordY) {
+        result = true;
+      } else {
+        return false;
+      }
+    }
     if (result) {
       gameOver();
     }
@@ -192,25 +209,58 @@ class GameCubit extends Cubit<GameState> {
 
   void newGame() {
     _router.pop();
-    restartGameFromScratch();
-  }
-
-  void restartGameFromScratch() {
-    init();
-    fillInitialCoordList(25, 65);
+    restartGame();
   }
 
   void restartGame() {
-    final oldCoord = state.listBoxes;
-    // calculate startX and boxWidth from oldCoord
-    final allX = List.generate(
-      oldCoord.length,
-      (index) => oldCoord.elementAt(index).coordX,
-    )..sort();
-    final oldStartX = allX.elementAt(0).toInt();
-    final boxWidth = (allX.elementAt(4) - allX.elementAt(0)).toInt();
-
     init();
-    fillInitialCoordList(oldStartX, boxWidth);
+    fillInitialCoordList();
   }
+}
+
+bool canSwapBoxes(
+  List<BoxWithCoord> listBoxes,
+  int index,
+  int boxWidth,
+  //int startX,
+) {
+  //final boxWidth = state.boxSize;
+  //const startX = 0;
+
+  final curNum = listBoxes.elementAt(index).text;
+  final spaceBetweenBoxes = boxWidth ~/ 5;
+
+  final curElement = listBoxes.firstWhere((element) => element.text == curNum);
+  final coordMidXcur = curElement.coordX + boxWidth / 2;
+  final coordMidYcur = curElement.coordY + boxWidth / 2;
+
+  final emptyElement = listBoxes.firstWhere((element) => element.text == 16);
+  final coordMidXempty = emptyElement.coordX + boxWidth / 2;
+  final coordMidYempty = emptyElement.coordY + boxWidth / 2;
+
+  var canSwap = false;
+  final boxWidthAndSpaceBetween = boxWidth + spaceBetweenBoxes;
+
+  // can move current to right
+  if ((coordMidXcur + boxWidthAndSpaceBetween) == coordMidXempty &&
+      coordMidYcur == coordMidYempty) {
+    canSwap = true;
+  }
+  // can move current to down
+  if (coordMidXcur == coordMidXempty &&
+      (coordMidYcur + boxWidthAndSpaceBetween) == coordMidYempty) {
+    canSwap = true;
+  }
+  // can move current to left
+  if ((coordMidXcur - boxWidthAndSpaceBetween) == coordMidXempty &&
+      coordMidYcur == coordMidYempty) {
+    canSwap = true;
+  }
+  // can move current to top
+  if (coordMidXcur == coordMidXempty &&
+      (coordMidYcur - boxWidthAndSpaceBetween) == coordMidYempty) {
+    canSwap = true;
+  }
+
+  return canSwap;
 }

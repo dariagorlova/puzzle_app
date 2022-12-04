@@ -60,145 +60,34 @@ class Actions extends StatelessWidget {
     return BlocBuilder<TimerBloc, TimerState>(
       buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
       builder: (context, state) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            BlocListener<GameCubit, GameState>(
-              listenWhen: (previous, current) =>
-                  !previous.gameHasBegun && current.gameHasBegun,
-              listener: (context, state) {
-                if (state.gameHasBegun) {
-                  context
-                      .read<TimerBloc>()
-                      .add(const TimerStarted(duration: gameDuration));
-                }
+        return BlocListener<GameCubit, GameState>(
+          listenWhen: (previous, current) =>
+              !previous.gameHasBegun && current.gameHasBegun,
+          listener: (context, state) {
+            if (state.gameHasBegun) {
+              context
+                  .read<TimerBloc>()
+                  .add(const TimerStarted(duration: gameDuration));
+            }
+          },
+          child: BlocListener<GameCubit, GameState>(
+            listenWhen: (previous, current) =>
+                !previous.playerWin && current.playerWin,
+            listener: (context, state) {
+              if (state.playerWin) {
+                context.read<TimerBloc>().add(const TimerReset());
+              }
+            },
+            child: GradientButton(
+              title: const Icon(Icons.replay),
+              funcOnTap: () {
+                context.read<TimerBloc>().add(const TimerReset());
+                context.read<GameCubit>().restartGame();
               },
-              child: BlocListener<GameCubit, GameState>(
-                listenWhen: (previous, current) =>
-                    !previous.playerWin && current.playerWin,
-                listener: (context, state) {
-                  if (state.playerWin) {
-                    context.read<TimerBloc>().add(const TimerReset());
-                  }
-                },
-                child: GradientButton(
-                  title: const Icon(Icons.replay),
-                  funcOnTap: () {
-                    context.read<TimerBloc>().add(const TimerReset());
-                    context.read<GameCubit>().restartGame();
-                  },
-                ),
-              ),
             ),
-          ],
+          ),
         );
       },
     );
   }
 }
-
-// class Actions extends StatelessWidget {
-//   const Actions({super.key});
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocListener<GameCubit, GameState>(
-//       listenWhen: (previous, current) =>
-//           !previous.gameHasBegun && current.gameHasBegun,
-//       listener: (context, state) {
-//         if (state.gameHasBegun) {
-//           context.read<TimerBloc>().add(const TimerStarted(duration: 0));
-//         } else {
-//           context.read<TimerBloc>().add(const TimerPaused());
-//         }
-//       },
-//       child: BlocBuilder<TimerBloc, TimerState>(
-//         buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
-//         builder: (context, state) {
-//           return Row(
-//             children: [
-//               GradientButton(
-//                 title: const Icon(Icons.play_arrow),
-//                 funcOnTap: () =>
-//                     context.read<TimerBloc>().add(TimerStarted(duration: 0)),
-//               ),
-//               GradientButton(
-//                 title: const Icon(Icons.replay),
-//                 funcOnTap: () {
-//                   context.read<TimerBloc>().add(const TimerReset());
-//                   context.read<GameCubit>().restartGame();
-//                 },
-//               ),
-//             ],
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
-// WORK VERSION, DON'T TOUCH
-// class Actions extends StatelessWidget {
-//   const Actions({super.key});
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<TimerBloc, TimerState>(
-//       buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
-//       builder: (context, state) {
-//         return Row(
-//           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//           children: [
-//             if (state is TimerInitial) ...[
-//               GradientButton(
-//                 title: const Icon(Icons.play_arrow),
-//                 funcOnTap: () => context
-//                     .read<TimerBloc>()
-//                     .add(TimerStarted(duration: state.duration)),
-//               ),
-//             ],
-//             if (state is TimerRunInProgress) ...[
-//               GradientButton(
-//                 title: const Icon(Icons.pause),
-//                 funcOnTap: () =>
-//                     context.read<TimerBloc>().add(const TimerPaused()),
-//               ),
-//               const SizedBox(
-//                 width: 10,
-//               ),
-//               GradientButton(
-//                 title: const Icon(Icons.replay),
-//                 funcOnTap: () {
-//                   context.read<TimerBloc>().add(const TimerReset());
-//                   context.read<GameCubit>().restartGame();
-//                 },
-//               ),
-//             ],
-//             if (state is TimerRunPause) ...[
-//               GradientButton(
-//                 title: const Icon(Icons.play_arrow),
-//                 funcOnTap: () =>
-//                     context.read<TimerBloc>().add(const TimerResumed()),
-//               ),
-//               const SizedBox(
-//                 width: 10,
-//               ),
-//               GradientButton(
-//                 title: const Icon(Icons.replay),
-//                 funcOnTap: () =>
-//                     context.read<TimerBloc>().add(const TimerReset()),
-//               ),
-//             ],
-//             // if (state is TimerRunComplete) ...[
-//             //   FloatingActionButton(
-//             //     backgroundColor: Colors.cyan.shade100,
-//             //     child: const Icon(Icons.replay),
-//             //     onPressed: () => context.read<TimerBloc>().add(
-//             //           const TimerReset(),
-//             //         ),
-//             //   ),
-//             //]
-//           ],
-//         );
-//       },
-//     );
-//   }
-// }

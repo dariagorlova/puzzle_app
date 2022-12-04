@@ -23,6 +23,7 @@ mixin _$GameState {
   bool get playerWin => throw _privateConstructorUsedError;
   dynamic get gameStartTimeInMilliSecSinceEpoch =>
       throw _privateConstructorUsedError;
+  int get boxSize => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GameStateCopyWith<GameState> get copyWith =>
@@ -39,7 +40,8 @@ abstract class $GameStateCopyWith<$Res> {
       dynamic stepsCount,
       bool gameHasBegun,
       bool playerWin,
-      dynamic gameStartTimeInMilliSecSinceEpoch});
+      dynamic gameStartTimeInMilliSecSinceEpoch,
+      int boxSize});
 }
 
 /// @nodoc
@@ -58,6 +60,7 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
     Object? gameHasBegun = freezed,
     Object? playerWin = freezed,
     Object? gameStartTimeInMilliSecSinceEpoch = freezed,
+    Object? boxSize = freezed,
   }) {
     return _then(_value.copyWith(
       numbers: numbers == freezed
@@ -85,6 +88,10 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
           ? _value.gameStartTimeInMilliSecSinceEpoch
           : gameStartTimeInMilliSecSinceEpoch // ignore: cast_nullable_to_non_nullable
               as dynamic,
+      boxSize: boxSize == freezed
+          ? _value.boxSize
+          : boxSize // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -101,7 +108,8 @@ abstract class _$$_GameStateCopyWith<$Res> implements $GameStateCopyWith<$Res> {
       dynamic stepsCount,
       bool gameHasBegun,
       bool playerWin,
-      dynamic gameStartTimeInMilliSecSinceEpoch});
+      dynamic gameStartTimeInMilliSecSinceEpoch,
+      int boxSize});
 }
 
 /// @nodoc
@@ -122,6 +130,7 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
     Object? gameHasBegun = freezed,
     Object? playerWin = freezed,
     Object? gameStartTimeInMilliSecSinceEpoch = freezed,
+    Object? boxSize = freezed,
   }) {
     return _then(_$_GameState(
       numbers: numbers == freezed
@@ -145,6 +154,10 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
           gameStartTimeInMilliSecSinceEpoch == freezed
               ? _value.gameStartTimeInMilliSecSinceEpoch
               : gameStartTimeInMilliSecSinceEpoch,
+      boxSize: boxSize == freezed
+          ? _value.boxSize
+          : boxSize // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -158,7 +171,8 @@ class _$_GameState implements _GameState {
       this.stepsCount = 0,
       this.gameHasBegun = false,
       this.playerWin = false,
-      this.gameStartTimeInMilliSecSinceEpoch = 0})
+      this.gameStartTimeInMilliSecSinceEpoch = 0,
+      this.boxSize = 50})
       : _numbers = numbers,
         _listBoxes = listBoxes;
 
@@ -190,10 +204,13 @@ class _$_GameState implements _GameState {
   @override
   @JsonKey()
   final dynamic gameStartTimeInMilliSecSinceEpoch;
+  @override
+  @JsonKey()
+  final int boxSize;
 
   @override
   String toString() {
-    return 'GameState(numbers: $numbers, listBoxes: $listBoxes, stepsCount: $stepsCount, gameHasBegun: $gameHasBegun, playerWin: $playerWin, gameStartTimeInMilliSecSinceEpoch: $gameStartTimeInMilliSecSinceEpoch)';
+    return 'GameState(numbers: $numbers, listBoxes: $listBoxes, stepsCount: $stepsCount, gameHasBegun: $gameHasBegun, playerWin: $playerWin, gameStartTimeInMilliSecSinceEpoch: $gameStartTimeInMilliSecSinceEpoch, boxSize: $boxSize)';
   }
 
   @override
@@ -211,7 +228,8 @@ class _$_GameState implements _GameState {
             const DeepCollectionEquality().equals(other.playerWin, playerWin) &&
             const DeepCollectionEquality().equals(
                 other.gameStartTimeInMilliSecSinceEpoch,
-                gameStartTimeInMilliSecSinceEpoch));
+                gameStartTimeInMilliSecSinceEpoch) &&
+            const DeepCollectionEquality().equals(other.boxSize, boxSize));
   }
 
   @override
@@ -222,7 +240,8 @@ class _$_GameState implements _GameState {
       const DeepCollectionEquality().hash(stepsCount),
       const DeepCollectionEquality().hash(gameHasBegun),
       const DeepCollectionEquality().hash(playerWin),
-      const DeepCollectionEquality().hash(gameStartTimeInMilliSecSinceEpoch));
+      const DeepCollectionEquality().hash(gameStartTimeInMilliSecSinceEpoch),
+      const DeepCollectionEquality().hash(boxSize));
 
   @JsonKey(ignore: true)
   @override
@@ -237,7 +256,8 @@ abstract class _GameState implements GameState {
       final dynamic stepsCount,
       final bool gameHasBegun,
       final bool playerWin,
-      final dynamic gameStartTimeInMilliSecSinceEpoch}) = _$_GameState;
+      final dynamic gameStartTimeInMilliSecSinceEpoch,
+      final int boxSize}) = _$_GameState;
 
   @override
   List<int> get numbers;
@@ -251,6 +271,8 @@ abstract class _GameState implements GameState {
   bool get playerWin;
   @override
   dynamic get gameStartTimeInMilliSecSinceEpoch;
+  @override
+  int get boxSize;
   @override
   @JsonKey(ignore: true)
   _$$_GameStateCopyWith<_$_GameState> get copyWith =>

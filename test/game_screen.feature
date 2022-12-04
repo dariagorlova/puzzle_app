@@ -31,12 +31,9 @@ Feature: Game
   Scenario: User Win
     When I tap {'14'} text
     And I wait {2} second
-    And I tap {'14'} text
-    And I wait {2} second
-    And I see {'Steps: 2'} text
-    #And I tap {'15'} text
-    #And I wait
-    #Then I don't see {'15'} text
-    #And I see {'Congratulation!'} text
+    And I tap {'15'} text
+    And I wait
+    Then I don't see {'15'} text
+    And I see {'Congratulation!'} text
 
 
