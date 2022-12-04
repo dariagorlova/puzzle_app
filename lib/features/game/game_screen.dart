@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzle_app/di/injection.dart';
 import 'package:puzzle_app/features/game/cubit/game_cubit.dart';
-import 'package:puzzle_app/features/game/cubit/game_state.dart';
 import 'package:puzzle_app/features/game/widgets/background.dart';
 import 'package:puzzle_app/features/game/widgets/game_field.dart';
 import 'package:puzzle_app/features/game/widgets/steps_widget.dart';
@@ -45,9 +44,6 @@ class _GameScreenState extends State<_GameScreen> {
               screenHeight: screenHeight,
               screenWidth: screenWidth,
             ),
-      //  ],
-      //),
-      //),
     );
   }
 }
@@ -65,44 +61,27 @@ class VerticalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final boxWidth = screenWidth ~/ 6;
-    final startX =
-        ((screenWidth - 40) / 2 - 2 * boxWidth - 1.5 * (boxWidth / 5)).toInt();
+    final paddingValue = (screenWidth - 4 * boxWidth - 3 * (boxWidth / 5)) / 2;
 
     return Stack(
       children: [
         const Background(),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: boxWidth * 6, //screenHeight / 2, //450,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: BlocSelector<GameCubit, GameState, List<int>>(
-                    selector: (state) => state.numbers,
-                    builder: (context, numbersData) {
-                      return GameField(
-                        startX: startX,
-                        boxWidth: boxWidth,
-                      );
-                    },
-                  ),
-                ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: boxWidth * 6,
+              child: Padding(
+                padding: EdgeInsets.all(paddingValue),
+                child: GameField(boxWidth: boxWidth),
               ),
-              Center(
-                child: Column(
-                  children: const [
-                    StepsWidget(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    TimerWidget(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+            const StepsWidget(),
+            const SizedBox(
+              height: 10,
+            ),
+            const TimerWidget(),
+          ],
         ),
       ],
     );
@@ -121,38 +100,24 @@ class HorizontalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final boxWidth = screenHeight ~/ 6;
-    final boxWidth = (screenWidth / 2) ~/ 6;
-    final startX =
-        ((screenHeight - 40) / 2 - 2 * boxWidth - 1.5 * (boxWidth / 5)).toInt();
+    final boxWidth = screenHeight ~/ 6;
 
     return Stack(
       children: [
         const Background(),
-        Center(
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: boxWidth / 2),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 20),
-                alignment: Alignment.center,
+              SizedBox(
                 height: screenHeight,
-                width: boxWidth * 6, //screenWidth / 2,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: BlocSelector<GameCubit, GameState, List<int>>(
-                    selector: (state) => state.numbers,
-                    builder: (context, numbersData) {
-                      return GameField(
-                        startX: startX,
-                        boxWidth: boxWidth,
-                      );
-                    },
-                  ),
-                ),
+                width: screenWidth * 0.6,
+                child: GameField(boxWidth: boxWidth),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 40),
+              SizedBox(
+                height: screenHeight,
+                width: screenWidth * 0.4,
                 child: Column(
                   children: const [
                     StepsWidget(),
