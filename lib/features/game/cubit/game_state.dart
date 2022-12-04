@@ -12,5 +12,6 @@ class GameState with _$GameState {
     @Default(false) bool gameHasBegun,
     @Default(false) bool playerWin,
     @Default(0) gameStartTimeInMilliSecSinceEpoch,
+    @Default(50) int boxSize,
   }) = _GameState;
 }
