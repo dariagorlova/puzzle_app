@@ -11,7 +11,8 @@ class GameField extends StatefulWidget {
     required this.boxWidth,
   });
 
-  final int boxWidth;
+  //final int boxWidth;
+  final double boxWidth;
 
   @override
   State<GameField> createState() => _GameFieldState();

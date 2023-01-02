@@ -65,12 +65,12 @@ class CommonFunctions {
   }
 
   List<BoxWithCoord> fillInitialCoordList(
-    int boxWidthWithSpace,
+    double boxWidthWithSpace,
     List<int> gameData,
   ) {
     final listBoxes = <BoxWithCoord>[];
-    const startY = 0;
-    const startX = 0;
+    const startY = 0.0;
+    const startX = 0.0;
 
     for (var i = 0; i < 16; i++) {
       var coordX = startX;

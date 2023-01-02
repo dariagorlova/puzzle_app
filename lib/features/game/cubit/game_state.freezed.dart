@@ -23,7 +23,7 @@ mixin _$GameState {
   bool get playerWin => throw _privateConstructorUsedError;
   dynamic get gameStartTimeInMilliSecSinceEpoch =>
       throw _privateConstructorUsedError;
-  int get boxSize => throw _privateConstructorUsedError;
+  double get boxSize => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $GameStateCopyWith<GameState> get copyWith =>
@@ -41,7 +41,7 @@ abstract class $GameStateCopyWith<$Res> {
       bool gameHasBegun,
       bool playerWin,
       dynamic gameStartTimeInMilliSecSinceEpoch,
-      int boxSize});
+      double boxSize});
 }
 
 /// @nodoc
@@ -91,7 +91,7 @@ class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
       boxSize: boxSize == freezed
           ? _value.boxSize
           : boxSize // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
     ));
   }
 }
@@ -109,7 +109,7 @@ abstract class _$$_GameStateCopyWith<$Res> implements $GameStateCopyWith<$Res> {
       bool gameHasBegun,
       bool playerWin,
       dynamic gameStartTimeInMilliSecSinceEpoch,
-      int boxSize});
+      double boxSize});
 }
 
 /// @nodoc
@@ -157,7 +157,7 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
       boxSize: boxSize == freezed
           ? _value.boxSize
           : boxSize // ignore: cast_nullable_to_non_nullable
-              as int,
+              as double,
     ));
   }
 }
@@ -206,7 +206,7 @@ class _$_GameState implements _GameState {
   final dynamic gameStartTimeInMilliSecSinceEpoch;
   @override
   @JsonKey()
-  final int boxSize;
+  final double boxSize;
 
   @override
   String toString() {
@@ -257,7 +257,7 @@ abstract class _GameState implements GameState {
       final bool gameHasBegun,
       final bool playerWin,
       final dynamic gameStartTimeInMilliSecSinceEpoch,
-      final int boxSize}) = _$_GameState;
+      final double boxSize}) = _$_GameState;
 
   @override
   List<int> get numbers;
@@ -272,7 +272,7 @@ abstract class _GameState implements GameState {
   @override
   dynamic get gameStartTimeInMilliSecSinceEpoch;
   @override
-  int get boxSize;
+  double get boxSize;
   @override
   @JsonKey(ignore: true)
   _$$_GameStateCopyWith<_$_GameState> get copyWith =>

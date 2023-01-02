@@ -19,7 +19,7 @@ class GameCubit extends Cubit<GameState> {
   final PuzzleNavigator _router;
   final CommonFunctions _func;
 
-  void setBoxSize(int boxSize) {
+  void setBoxSize(double boxSize) {
     emit(state.copyWith(boxSize: boxSize));
     fillInitialCoordList();
   }
@@ -71,7 +71,7 @@ class GameCubit extends Cubit<GameState> {
   }
 
   void fillInitialCoordList() {
-    final boxWidthWithSpace = state.boxSize + state.boxSize ~/ 5;
+    final boxWidthWithSpace = state.boxSize + state.boxSize / 5;
 
     final listBoxes = _func.fillInitialCoordList(
       boxWidthWithSpace,
@@ -221,7 +221,7 @@ class GameCubit extends Cubit<GameState> {
 bool canSwapBoxes(
   List<BoxWithCoord> listBoxes,
   int index,
-  int boxWidth,
+  double boxWidth,
   //int startX,
 ) {
   //final boxWidth = state.boxSize;
