@@ -34,16 +34,29 @@ class _GameScreenState extends State<_GameScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
+    // return Scaffold(
+    //   body: screenHeight > screenWidth
+    //       ? VerticalView(
+    //           screenHeight: screenHeight,
+    //           screenWidth: screenWidth,
+    //         )
+    //       : HorizontalView(
+    //           screenHeight: screenHeight,
+    //           screenWidth: screenWidth,
+    //         ),
+    // );
     return Scaffold(
-      body: screenHeight > screenWidth
-          ? VerticalView(
-              screenHeight: screenHeight,
-              screenWidth: screenWidth,
-            )
-          : HorizontalView(
-              screenHeight: screenHeight,
-              screenWidth: screenWidth,
-            ),
+      body: LayoutBuilder(builder: (context, constraints) {
+        return constraints.maxHeight > constraints.maxWidth
+            ? VerticalView(
+                screenHeight: constraints.maxHeight,
+                screenWidth: constraints.maxWidth,
+              )
+            : HorizontalView(
+                screenHeight: constraints.maxHeight,
+                screenWidth: constraints.maxWidth,
+              );
+      }),
     );
   }
 }
@@ -60,7 +73,7 @@ class VerticalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final boxWidth = screenWidth ~/ 6;
+    final boxWidth = screenWidth / 6;
     final paddingValue = (screenWidth - 4 * boxWidth - 3 * (boxWidth / 5)) / 2;
 
     return Stack(
@@ -100,17 +113,24 @@ class HorizontalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final boxWidth = screenHeight ~/ 6;
+    final boxWidth = screenHeight / 6;
+    final paddingHorValue =
+        (screenWidth * 0.6 - 4 * boxWidth - 3 * (boxWidth / 5)) / 2;
 
     return Stack(
       children: [
         const Background(),
         Padding(
-          padding: EdgeInsets.symmetric(vertical: boxWidth / 2),
+          padding: EdgeInsets.symmetric(
+            vertical: boxWidth / 2,
+          ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: paddingHorValue,
+                ),
                 height: screenHeight,
                 width: screenWidth * 0.6,
                 child: GameField(boxWidth: boxWidth),
