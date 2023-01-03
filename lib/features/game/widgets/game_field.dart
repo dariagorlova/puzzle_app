@@ -11,7 +11,6 @@ class GameField extends StatefulWidget {
     required this.boxWidth,
   });
 
-  //final int boxWidth;
   final double boxWidth;
 
   @override
@@ -29,8 +28,8 @@ class _GameFieldState extends State<GameField> {
     return AnimatedPositioned(
       left: box.coordX,
       top: box.coordY,
-      width: widget.boxWidth.toDouble(),
-      height: widget.boxWidth.toDouble(),
+      width: widget.boxWidth,
+      height: widget.boxWidth,
       duration: const Duration(seconds: 1),
       curve: Curves.fastOutSlowIn,
       child: GestureDetector(
@@ -41,12 +40,12 @@ class _GameFieldState extends State<GameField> {
         child: box.text != 16
             ? BoxWidget(
                 text: box.text.toString(),
-                width: widget.boxWidth.toDouble(),
+                width: widget.boxWidth,
               )
             : Container(
                 color: Colors.transparent,
-                width: widget.boxWidth.toDouble(),
-                height: widget.boxWidth.toDouble(),
+                width: widget.boxWidth,
+                height: widget.boxWidth,
                 child: const Text(''),
               ),
       ),

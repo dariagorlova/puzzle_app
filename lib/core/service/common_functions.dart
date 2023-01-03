@@ -92,8 +92,8 @@ class CommonFunctions {
 
       listBoxes.add(
         BoxWithCoord(
-          coordX: coordX.toDouble(),
-          coordY: coordY.toDouble(),
+          coordX: coordX,
+          coordY: coordY,
           text: gameData[i],
         ),
       );
