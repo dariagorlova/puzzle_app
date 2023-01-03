@@ -33,7 +33,6 @@ class _GameScreenState extends State<_GameScreen> {
   Widget build(BuildContext context) {
     //final screenHeight = MediaQuery.of(context).size.height;
     //final screenWidth = MediaQuery.of(context).size.width;
-
     // return Scaffold(
     //   body: screenHeight > screenWidth
     //       ? VerticalView(
@@ -77,10 +76,6 @@ class VerticalView extends StatelessWidget {
   Widget build(BuildContext context) {
     final boxWidth = screenWidth / 6;
     final paddingValue = (screenWidth - 4 * boxWidth - 3 * (boxWidth / 5)) / 2;
-
-    //getStartCoordinates(context);
-    //final res = key2.globalPaintBounds;
-    //print(res);
 
     return Stack(
       children: [
