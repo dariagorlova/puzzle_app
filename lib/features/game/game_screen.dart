@@ -31,9 +31,8 @@ class _GameScreen extends StatefulWidget {
 class _GameScreenState extends State<_GameScreen> {
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
+    //final screenHeight = MediaQuery.of(context).size.height;
+    //final screenWidth = MediaQuery.of(context).size.width;
     // return Scaffold(
     //   body: screenHeight > screenWidth
     //       ? VerticalView(
@@ -46,17 +45,19 @@ class _GameScreenState extends State<_GameScreen> {
     //         ),
     // );
     return Scaffold(
-      body: LayoutBuilder(builder: (context, constraints) {
-        return constraints.maxHeight > constraints.maxWidth
-            ? VerticalView(
-                screenHeight: constraints.maxHeight,
-                screenWidth: constraints.maxWidth,
-              )
-            : HorizontalView(
-                screenHeight: constraints.maxHeight,
-                screenWidth: constraints.maxWidth,
-              );
-      }),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return constraints.maxHeight > constraints.maxWidth
+              ? VerticalView(
+                  screenHeight: constraints.maxHeight,
+                  screenWidth: constraints.maxWidth,
+                )
+              : HorizontalView(
+                  screenHeight: constraints.maxHeight,
+                  screenWidth: constraints.maxWidth,
+                );
+        },
+      ),
     );
   }
 }
@@ -86,7 +87,9 @@ class VerticalView extends StatelessWidget {
               height: boxWidth * 6,
               child: Padding(
                 padding: EdgeInsets.all(paddingValue),
-                child: GameField(boxWidth: boxWidth),
+                child: GameField(
+                  boxWidth: boxWidth,
+                ),
               ),
             ),
             const StepsWidget(),
@@ -133,7 +136,9 @@ class HorizontalView extends StatelessWidget {
                 ),
                 height: screenHeight,
                 width: screenWidth * 0.6,
-                child: GameField(boxWidth: boxWidth),
+                child: GameField(
+                  boxWidth: boxWidth,
+                ),
               ),
               SizedBox(
                 height: screenHeight,
