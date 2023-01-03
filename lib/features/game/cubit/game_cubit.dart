@@ -20,7 +20,11 @@ class GameCubit extends Cubit<GameState> {
   final CommonFunctions _func;
 
   void setBoxSize(double boxSize) {
-    emit(state.copyWith(boxSize: boxSize));
+    emit(
+      state.copyWith(
+        boxSize: boxSize,
+      ),
+    );
     fillInitialCoordList();
   }
 
@@ -121,9 +125,7 @@ class GameCubit extends Cubit<GameState> {
     }
   }
 
-  void checkForGameOver(
-    List<BoxWithCoord> listBoxes,
-  ) {
+  void checkForGameOver(List<BoxWithCoord> listBoxes) {
     final boxWidthWithSpace = state.boxSize + state.boxSize ~/ 5;
     final initList = _func.fillInitialCoordList(
       //startX,
@@ -228,7 +230,7 @@ bool canSwapBoxes(
   //const startX = 0;
 
   final curNum = listBoxes.elementAt(index).text;
-  final spaceBetweenBoxes = boxWidth ~/ 5;
+  final spaceBetweenBoxes = boxWidth / 5; // ~/
 
   final curElement = listBoxes.firstWhere((element) => element.text == curNum);
   final coordMidXcur = curElement.coordX + boxWidth / 2;
