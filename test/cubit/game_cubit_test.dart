@@ -28,12 +28,12 @@ void main() {
         ..fillInitialCoordList();
       expect(sut.state.listBoxes.isEmpty, isFalse);
     });
-    test('updates steps count after correct step', () async {
-      sut.init();
-      //final steps = sut.state.stepsCount;
-      //sut.swapBoxes(13, 50, 0);
-      //expect(sut.state.stepsCount, steps + 1);
-    });
+    // test('updates steps count after correct step', () async {
+    //   sut.init();
+    //   final steps = sut.state.stepsCount;
+    //   sut.swapBoxes(13);
+    //   expect(sut.state.stepsCount, steps + 1);
+    // });
     test('puzzle completed', () async {
       final list1 = [
         BoxWithCoord(coordX: 0, coordY: 0, text: 1),
