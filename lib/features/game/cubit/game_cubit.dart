@@ -243,26 +243,51 @@ bool canSwapBoxes(
   var canSwap = false;
   final boxWidthAndSpaceBetween = boxWidth + spaceBetweenBoxes;
 
+  // rounded values (need for web)
+  final coordMidXcur_ = num.parse(coordMidXcur.toStringAsFixed(4));
+  final boxWidthAndSpaceBetween_ =
+      num.parse(boxWidthAndSpaceBetween.toStringAsFixed(4));
+  final coordMidXempty_ = num.parse(coordMidXempty.toStringAsFixed(4));
+  final coordMidYcur_ = num.parse(coordMidYcur.toStringAsFixed(4));
+  final coordMidYempty_ = num.parse(coordMidYempty.toStringAsFixed(4));
+
   // can move current to right
-  if ((coordMidXcur + boxWidthAndSpaceBetween) == coordMidXempty &&
-      coordMidYcur == coordMidYempty) {
+  if ((coordMidXcur_ + boxWidthAndSpaceBetween_) == coordMidXempty_ &&
+      coordMidYcur_ == coordMidYempty_) {
     canSwap = true;
   }
   // can move current to down
-  if (coordMidXcur == coordMidXempty &&
-      (coordMidYcur + boxWidthAndSpaceBetween) == coordMidYempty) {
+  if (coordMidXcur_ == coordMidXempty_ &&
+      (coordMidYcur_ + boxWidthAndSpaceBetween_) == coordMidYempty_) {
     canSwap = true;
   }
   // can move current to left
-  if ((coordMidXcur - boxWidthAndSpaceBetween) == coordMidXempty &&
-      coordMidYcur == coordMidYempty) {
+  if ((coordMidXcur_ - boxWidthAndSpaceBetween_) == coordMidXempty_ &&
+      coordMidYcur_ == coordMidYempty_) {
     canSwap = true;
   }
   // can move current to top
-  if (coordMidXcur == coordMidXempty &&
-      (coordMidYcur - boxWidthAndSpaceBetween) == coordMidYempty) {
+  if (coordMidXcur_ == coordMidXempty_ &&
+      (coordMidYcur_ - boxWidthAndSpaceBetween_) == coordMidYempty_) {
     canSwap = true;
   }
+
+  // if ((coordMidXcur + boxWidthAndSpaceBetween) == coordMidXempty &&
+  //     coordMidYcur == coordMidYempty) {
+  //   canSwap = true;
+  // }
+  // if (coordMidXcur == coordMidXempty &&
+  //     (coordMidYcur + boxWidthAndSpaceBetween) == coordMidYempty) {
+  //   canSwap = true;
+  // }
+  // if ((coordMidXcur - boxWidthAndSpaceBetween) == coordMidXempty &&
+  //     coordMidYcur == coordMidYempty) {
+  //   canSwap = true;
+  // }
+  // if (coordMidXcur == coordMidXempty &&
+  //     (coordMidYcur - boxWidthAndSpaceBetween) == coordMidYempty) {
+  //   canSwap = true;
+  // }
 
   return canSwap;
 }
