@@ -50,8 +50,6 @@ class _GameFieldState extends State<GameField> {
               ),
       ),
     );
-    //   },
-    // );
   }
 
   @override
