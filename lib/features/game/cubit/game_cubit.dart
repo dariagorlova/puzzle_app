@@ -240,35 +240,40 @@ bool canSwapBoxes(
   final boxWidthAndSpaceBetween = boxWidth + spaceBetweenBoxes;
 
   // rounded values (need for web)
-  final coordMidXcur_ = num.parse(coordMidXcur.toStringAsFixed(2));
+  final coordMidXcur_ = num.parse(coordMidXcur.toStringAsFixed(1));
   final boxWidthAndSpaceBetween_ =
-      num.parse(boxWidthAndSpaceBetween.toStringAsFixed(2));
-  final coordMidXempty_ = num.parse(coordMidXempty.toStringAsFixed(2));
-  final coordMidYcur_ = num.parse(coordMidYcur.toStringAsFixed(2));
-  final coordMidYempty_ = num.parse(coordMidYempty.toStringAsFixed(2));
+      num.parse(boxWidthAndSpaceBetween.toStringAsFixed(1));
+  final coordMidXempty_ = num.parse(coordMidXempty.toStringAsFixed(1));
+  final coordMidYcur_ = num.parse(coordMidYcur.toStringAsFixed(1));
+  final coordMidYempty_ = num.parse(coordMidYempty.toStringAsFixed(1));
+
+  final xplusBoxWidth_ = coordMidXcur_ + boxWidthAndSpaceBetween_;
+  final yplusBoxWidth_ = coordMidYcur_ + boxWidthAndSpaceBetween_;
+  final xminusBoxWidth_ = coordMidXcur_ - boxWidthAndSpaceBetween_;
+  final yminusBoxWidth_ = coordMidYcur_ - boxWidthAndSpaceBetween_;
+  final xplusBoxWidth = num.parse(xplusBoxWidth_.toStringAsFixed(1));
+  final yplusBoxWidth = num.parse(yplusBoxWidth_.toStringAsFixed(1));
+  final xminusBoxWidth = num.parse(xminusBoxWidth_.toStringAsFixed(1));
+  final yminusBoxWidth = num.parse(yminusBoxWidth_.toStringAsFixed(1));
 
   // can move current to right
-  if (coordMidXempty_.compareTo(coordMidXcur_ + boxWidthAndSpaceBetween_) ==
-          0 &&
+  if (coordMidXempty_.compareTo(xplusBoxWidth) == 0 &&
       coordMidYcur_.compareTo(coordMidYempty_) == 0) {
     canSwap = true;
   }
   // can move current to down
   if (coordMidXcur_.compareTo(coordMidXempty_) == 0 &&
-      coordMidYempty_.compareTo(coordMidYcur_ + boxWidthAndSpaceBetween_) ==
-          0) {
+      coordMidYempty_.compareTo(yplusBoxWidth) == 0) {
     canSwap = true;
   }
   // can move current to left
-  if (coordMidXempty_.compareTo(coordMidXcur_ - boxWidthAndSpaceBetween_) ==
-          0 &&
+  if (coordMidXempty_.compareTo(xminusBoxWidth) == 0 &&
       coordMidYcur_.compareTo(coordMidYempty_) == 0) {
     canSwap = true;
   }
   // can move current to top
   if (coordMidXcur_.compareTo(coordMidXempty_) == 0 &&
-      coordMidYempty_.compareTo(coordMidYcur_ - boxWidthAndSpaceBetween_) ==
-          0) {
+      coordMidYempty_.compareTo(yminusBoxWidth) == 0) {
     canSwap = true;
   }
 
