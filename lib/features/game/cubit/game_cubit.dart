@@ -240,7 +240,7 @@ bool canSwapBoxes(
   final boxWidthAndSpaceBetween = boxWidth + spaceBetweenBoxes;
 
   // rounded values (need for web)
-  final coordMidXcur_ = num.parse(coordMidXcur.toStringAsFixed(1));
+  final coordMidXcur_ = num.parse(coordMidXcur.toStringAsFixed(2));
   final boxWidthAndSpaceBetween_ =
       num.parse(boxWidthAndSpaceBetween.toStringAsFixed(2));
   final coordMidXempty_ = num.parse(coordMidXempty.toStringAsFixed(2));
