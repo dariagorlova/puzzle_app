@@ -289,6 +289,5 @@ bool canSwapBoxes(
   //     (coordMidYcur - boxWidthAndSpaceBetween) == coordMidYempty) {
   //   canSwap = true;
   // }
-
   return canSwap;
 }
