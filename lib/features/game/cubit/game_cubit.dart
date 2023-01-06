@@ -224,11 +224,7 @@ bool canSwapBoxes(
   List<BoxWithCoord> listBoxes,
   int index,
   double boxWidth,
-  //int startX,
 ) {
-  //final boxWidth = state.boxSize;
-  //const startX = 0;
-
   final curNum = listBoxes.elementAt(index).text;
   final spaceBetweenBoxes = boxWidth / 5; // ~/
 
@@ -244,34 +240,39 @@ bool canSwapBoxes(
   final boxWidthAndSpaceBetween = boxWidth + spaceBetweenBoxes;
 
   // rounded values (need for web)
-  final coordMidXcur_ = num.parse(coordMidXcur.toStringAsFixed(4));
+  final coordMidXcur_ = num.parse(coordMidXcur.toStringAsFixed(1));
   final boxWidthAndSpaceBetween_ =
-      num.parse(boxWidthAndSpaceBetween.toStringAsFixed(4));
-  final coordMidXempty_ = num.parse(coordMidXempty.toStringAsFixed(4));
-  final coordMidYcur_ = num.parse(coordMidYcur.toStringAsFixed(4));
-  final coordMidYempty_ = num.parse(coordMidYempty.toStringAsFixed(4));
+      num.parse(boxWidthAndSpaceBetween.toStringAsFixed(2));
+  final coordMidXempty_ = num.parse(coordMidXempty.toStringAsFixed(2));
+  final coordMidYcur_ = num.parse(coordMidYcur.toStringAsFixed(2));
+  final coordMidYempty_ = num.parse(coordMidYempty.toStringAsFixed(2));
 
   // can move current to right
-  if ((coordMidXcur_ + boxWidthAndSpaceBetween_) == coordMidXempty_ &&
-      coordMidYcur_ == coordMidYempty_) {
+  if (coordMidXempty_.compareTo(coordMidXcur_ + boxWidthAndSpaceBetween_) ==
+          0 &&
+      coordMidYcur_.compareTo(coordMidYempty_) == 0) {
     canSwap = true;
   }
   // can move current to down
-  if (coordMidXcur_ == coordMidXempty_ &&
-      (coordMidYcur_ + boxWidthAndSpaceBetween_) == coordMidYempty_) {
+  if (coordMidXcur_.compareTo(coordMidXempty_) == 0 &&
+      coordMidYempty_.compareTo(coordMidYcur_ + boxWidthAndSpaceBetween_) ==
+          0) {
     canSwap = true;
   }
   // can move current to left
-  if ((coordMidXcur_ - boxWidthAndSpaceBetween_) == coordMidXempty_ &&
-      coordMidYcur_ == coordMidYempty_) {
+  if (coordMidXempty_.compareTo(coordMidXcur_ - boxWidthAndSpaceBetween_) ==
+          0 &&
+      coordMidYcur_.compareTo(coordMidYempty_) == 0) {
     canSwap = true;
   }
   // can move current to top
-  if (coordMidXcur_ == coordMidXempty_ &&
-      (coordMidYcur_ - boxWidthAndSpaceBetween_) == coordMidYempty_) {
+  if (coordMidXcur_.compareTo(coordMidXempty_) == 0 &&
+      coordMidYempty_.compareTo(coordMidYcur_ - boxWidthAndSpaceBetween_) ==
+          0) {
     canSwap = true;
   }
 
+  // old version without round and compareTo
   // if ((coordMidXcur + boxWidthAndSpaceBetween) == coordMidXempty &&
   //     coordMidYcur == coordMidYempty) {
   //   canSwap = true;
