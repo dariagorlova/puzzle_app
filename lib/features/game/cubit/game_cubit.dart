@@ -126,7 +126,8 @@ class GameCubit extends Cubit<GameState> {
   }
 
   void checkForGameOver(List<BoxWithCoord> listBoxes) {
-    final boxWidthWithSpace = state.boxSize + state.boxSize ~/ 5;
+    final boxWidthWithSpace =
+        state.boxSize + state.boxSize / 5; // ~/5 don't work in web
     final initList = _func.fillInitialCoordList(
       //startX,
       boxWidthWithSpace,
