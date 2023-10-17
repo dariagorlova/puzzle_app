@@ -4,7 +4,14 @@ import 'package:puzzle_app/di/injection.config.dart';
 
 final getIt = GetIt.instance;
 
-@injectableInit
-GetIt configureInjection(String environment) {
-  return $initGetIt(getIt, environment: environment);
-}
+@InjectableInit(
+  initializerName: 'init', // default
+  preferRelativeImports: true, // default
+  asExtension: true, // default
+)
+
+void configureDependencies() => getIt.init();
+
+// GetIt configureInjection(String environment) {
+//   return $initGetIt(getIt, environment: environment);
+// }

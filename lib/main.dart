@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:injectable/injectable.dart';
 import 'package:puzzle_app/di/injection.dart';
 import 'package:puzzle_app/localization/localization.dart';
 import 'package:puzzle_app/routes/app_router.dart';
 
 void main() {
-  configureInjection(Environment.prod);
+  //configureInjection(Environment.prod);
+  configureDependencies();
   runApp(const MyApp());
 }
 

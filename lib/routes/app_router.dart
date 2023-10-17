@@ -7,11 +7,11 @@ import 'package:puzzle_app/features/game/game_screen.dart';
 part 'app_router.gr.dart';
 
 @lazySingleton
-@MaterialAutoRouter(
-  replaceInRouteName: 'Screen,Route',
-  routes: <AutoRoute>[
-    AutoRoute<void>(page: GameScreen, initial: true),
-    AutoRoute<bool>(page: CongratulationScreen),
-  ],
-)
-class AppRouter extends _$AppRouter {}
+@AutoRouterConfig(replaceInRouteName: 'Screen,Route')
+class AppRouter extends _$AppRouter {
+  @override
+  List<AutoRoute> get routes => <AutoRoute>[
+        AutoRoute(page: GameRoute.page, initial: true),
+        AutoRoute(page: CongratulationRoute.page),
+      ];
+}

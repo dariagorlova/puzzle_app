@@ -1,3 +1,4 @@
+import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:puzzle_app/di/injection.dart';
@@ -7,6 +8,7 @@ import 'package:puzzle_app/features/game/widgets/game_field.dart';
 import 'package:puzzle_app/features/game/widgets/steps_widget.dart';
 import 'package:puzzle_app/features/game/widgets/timer/timer_widget.dart';
 
+@RoutePage()
 class GameScreen extends StatelessWidget {
   const GameScreen({
     super.key,
