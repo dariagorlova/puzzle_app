@@ -7,8 +7,8 @@ import 'package:puzzle_app/features/game/widgets/box_widget.dart';
 
 class GameField extends StatefulWidget {
   const GameField({
-    super.key,
     required this.boxWidth,
+    super.key,
   });
 
   final double boxWidth;

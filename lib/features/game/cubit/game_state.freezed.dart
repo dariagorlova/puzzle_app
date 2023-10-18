@@ -1,7 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'game_state.dart';
 
@@ -33,7 +33,8 @@ mixin _$GameState {
 /// @nodoc
 abstract class $GameStateCopyWith<$Res> {
   factory $GameStateCopyWith(GameState value, $Res Function(GameState) then) =
-      _$GameStateCopyWithImpl<$Res>;
+      _$GameStateCopyWithImpl<$Res, GameState>;
+  @useResult
   $Res call(
       {List<int> numbers,
       List<BoxWithCoord> listBoxes,
@@ -45,63 +46,68 @@ abstract class $GameStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$GameStateCopyWithImpl<$Res> implements $GameStateCopyWith<$Res> {
+class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
+    implements $GameStateCopyWith<$Res> {
   _$GameStateCopyWithImpl(this._value, this._then);
 
-  final GameState _value;
   // ignore: unused_field
-  final $Res Function(GameState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? numbers = freezed,
-    Object? listBoxes = freezed,
+    Object? numbers = null,
+    Object? listBoxes = null,
     Object? stepsCount = freezed,
-    Object? gameHasBegun = freezed,
-    Object? playerWin = freezed,
+    Object? gameHasBegun = null,
+    Object? playerWin = null,
     Object? gameStartTimeInMilliSecSinceEpoch = freezed,
-    Object? boxSize = freezed,
+    Object? boxSize = null,
   }) {
     return _then(_value.copyWith(
-      numbers: numbers == freezed
+      numbers: null == numbers
           ? _value.numbers
           : numbers // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      listBoxes: listBoxes == freezed
+      listBoxes: null == listBoxes
           ? _value.listBoxes
           : listBoxes // ignore: cast_nullable_to_non_nullable
               as List<BoxWithCoord>,
-      stepsCount: stepsCount == freezed
+      stepsCount: freezed == stepsCount
           ? _value.stepsCount
           : stepsCount // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      gameHasBegun: gameHasBegun == freezed
+      gameHasBegun: null == gameHasBegun
           ? _value.gameHasBegun
           : gameHasBegun // ignore: cast_nullable_to_non_nullable
               as bool,
-      playerWin: playerWin == freezed
+      playerWin: null == playerWin
           ? _value.playerWin
           : playerWin // ignore: cast_nullable_to_non_nullable
               as bool,
-      gameStartTimeInMilliSecSinceEpoch: gameStartTimeInMilliSecSinceEpoch ==
-              freezed
+      gameStartTimeInMilliSecSinceEpoch: freezed ==
+              gameStartTimeInMilliSecSinceEpoch
           ? _value.gameStartTimeInMilliSecSinceEpoch
           : gameStartTimeInMilliSecSinceEpoch // ignore: cast_nullable_to_non_nullable
               as dynamic,
-      boxSize: boxSize == freezed
+      boxSize: null == boxSize
           ? _value.boxSize
           : boxSize // ignore: cast_nullable_to_non_nullable
               as double,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$_GameStateCopyWith<$Res> implements $GameStateCopyWith<$Res> {
-  factory _$$_GameStateCopyWith(
-          _$_GameState value, $Res Function(_$_GameState) then) =
-      __$$_GameStateCopyWithImpl<$Res>;
+abstract class _$$GameStateImplCopyWith<$Res>
+    implements $GameStateCopyWith<$Res> {
+  factory _$$GameStateImplCopyWith(
+          _$GameStateImpl value, $Res Function(_$GameStateImpl) then) =
+      __$$GameStateImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {List<int> numbers,
       List<BoxWithCoord> listBoxes,
@@ -113,48 +119,47 @@ abstract class _$$_GameStateCopyWith<$Res> implements $GameStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
-    implements _$$_GameStateCopyWith<$Res> {
-  __$$_GameStateCopyWithImpl(
-      _$_GameState _value, $Res Function(_$_GameState) _then)
-      : super(_value, (v) => _then(v as _$_GameState));
+class __$$GameStateImplCopyWithImpl<$Res>
+    extends _$GameStateCopyWithImpl<$Res, _$GameStateImpl>
+    implements _$$GameStateImplCopyWith<$Res> {
+  __$$GameStateImplCopyWithImpl(
+      _$GameStateImpl _value, $Res Function(_$GameStateImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _$_GameState get _value => super._value as _$_GameState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? numbers = freezed,
-    Object? listBoxes = freezed,
+    Object? numbers = null,
+    Object? listBoxes = null,
     Object? stepsCount = freezed,
-    Object? gameHasBegun = freezed,
-    Object? playerWin = freezed,
+    Object? gameHasBegun = null,
+    Object? playerWin = null,
     Object? gameStartTimeInMilliSecSinceEpoch = freezed,
-    Object? boxSize = freezed,
+    Object? boxSize = null,
   }) {
-    return _then(_$_GameState(
-      numbers: numbers == freezed
+    return _then(_$GameStateImpl(
+      numbers: null == numbers
           ? _value._numbers
           : numbers // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      listBoxes: listBoxes == freezed
+      listBoxes: null == listBoxes
           ? _value._listBoxes
           : listBoxes // ignore: cast_nullable_to_non_nullable
               as List<BoxWithCoord>,
-      stepsCount: stepsCount == freezed ? _value.stepsCount : stepsCount,
-      gameHasBegun: gameHasBegun == freezed
+      stepsCount: freezed == stepsCount ? _value.stepsCount! : stepsCount,
+      gameHasBegun: null == gameHasBegun
           ? _value.gameHasBegun
           : gameHasBegun // ignore: cast_nullable_to_non_nullable
               as bool,
-      playerWin: playerWin == freezed
+      playerWin: null == playerWin
           ? _value.playerWin
           : playerWin // ignore: cast_nullable_to_non_nullable
               as bool,
       gameStartTimeInMilliSecSinceEpoch:
-          gameStartTimeInMilliSecSinceEpoch == freezed
-              ? _value.gameStartTimeInMilliSecSinceEpoch
+          freezed == gameStartTimeInMilliSecSinceEpoch
+              ? _value.gameStartTimeInMilliSecSinceEpoch!
               : gameStartTimeInMilliSecSinceEpoch,
-      boxSize: boxSize == freezed
+      boxSize: null == boxSize
           ? _value.boxSize
           : boxSize // ignore: cast_nullable_to_non_nullable
               as double,
@@ -164,8 +169,8 @@ class __$$_GameStateCopyWithImpl<$Res> extends _$GameStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_GameState implements _GameState {
-  const _$_GameState(
+class _$GameStateImpl implements _GameState {
+  const _$GameStateImpl(
       {final List<int> numbers = const [],
       final List<BoxWithCoord> listBoxes = const [],
       this.stepsCount = 0,
@@ -180,6 +185,7 @@ class _$_GameState implements _GameState {
   @override
   @JsonKey()
   List<int> get numbers {
+    if (_numbers is EqualUnmodifiableListView) return _numbers;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_numbers);
   }
@@ -188,6 +194,7 @@ class _$_GameState implements _GameState {
   @override
   @JsonKey()
   List<BoxWithCoord> get listBoxes {
+    if (_listBoxes is EqualUnmodifiableListView) return _listBoxes;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_listBoxes);
   }
@@ -217,19 +224,20 @@ class _$_GameState implements _GameState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_GameState &&
+            other is _$GameStateImpl &&
             const DeepCollectionEquality().equals(other._numbers, _numbers) &&
             const DeepCollectionEquality()
                 .equals(other._listBoxes, _listBoxes) &&
             const DeepCollectionEquality()
                 .equals(other.stepsCount, stepsCount) &&
-            const DeepCollectionEquality()
-                .equals(other.gameHasBegun, gameHasBegun) &&
-            const DeepCollectionEquality().equals(other.playerWin, playerWin) &&
+            (identical(other.gameHasBegun, gameHasBegun) ||
+                other.gameHasBegun == gameHasBegun) &&
+            (identical(other.playerWin, playerWin) ||
+                other.playerWin == playerWin) &&
             const DeepCollectionEquality().equals(
                 other.gameStartTimeInMilliSecSinceEpoch,
                 gameStartTimeInMilliSecSinceEpoch) &&
-            const DeepCollectionEquality().equals(other.boxSize, boxSize));
+            (identical(other.boxSize, boxSize) || other.boxSize == boxSize));
   }
 
   @override
@@ -238,15 +246,16 @@ class _$_GameState implements _GameState {
       const DeepCollectionEquality().hash(_numbers),
       const DeepCollectionEquality().hash(_listBoxes),
       const DeepCollectionEquality().hash(stepsCount),
-      const DeepCollectionEquality().hash(gameHasBegun),
-      const DeepCollectionEquality().hash(playerWin),
+      gameHasBegun,
+      playerWin,
       const DeepCollectionEquality().hash(gameStartTimeInMilliSecSinceEpoch),
-      const DeepCollectionEquality().hash(boxSize));
+      boxSize);
 
   @JsonKey(ignore: true)
   @override
-  _$$_GameStateCopyWith<_$_GameState> get copyWith =>
-      __$$_GameStateCopyWithImpl<_$_GameState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$GameStateImplCopyWith<_$GameStateImpl> get copyWith =>
+      __$$GameStateImplCopyWithImpl<_$GameStateImpl>(this, _$identity);
 }
 
 abstract class _GameState implements GameState {
@@ -257,7 +266,7 @@ abstract class _GameState implements GameState {
       final bool gameHasBegun,
       final bool playerWin,
       final dynamic gameStartTimeInMilliSecSinceEpoch,
-      final double boxSize}) = _$_GameState;
+      final double boxSize}) = _$GameStateImpl;
 
   @override
   List<int> get numbers;
@@ -275,6 +284,6 @@ abstract class _GameState implements GameState {
   double get boxSize;
   @override
   @JsonKey(ignore: true)
-  _$$_GameStateCopyWith<_$_GameState> get copyWith =>
+  _$$GameStateImplCopyWith<_$GameStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

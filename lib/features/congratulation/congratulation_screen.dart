@@ -11,8 +11,8 @@ import 'package:puzzle_app/localization/localization.dart';
 class CongratulationScreen extends StatelessWidget {
   const CongratulationScreen({
     required this.duration,
-    super.key,
     required this.steps,
+    super.key,
   });
 
   final String duration;
@@ -32,9 +32,9 @@ class CongratulationScreen extends StatelessWidget {
 
 class CongratulationScreenView extends StatelessWidget {
   const CongratulationScreenView({
-    super.key,
     required this.duration,
     required this.steps,
+    super.key,
   });
 
   final String duration;
@@ -43,7 +43,7 @@ class CongratulationScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme.of(context).colorScheme.background,
       body: Flex(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -95,9 +95,9 @@ class CongratulationScreenView extends StatelessWidget {
 
 class ResultColumn extends StatelessWidget {
   const ResultColumn({
-    super.key,
     required this.durationText,
     required this.stepsText,
+    super.key,
   });
 
   final String durationText;
@@ -112,7 +112,7 @@ class ResultColumn extends StatelessWidget {
         Text(
           t.congratulationText,
           style: GoogleFonts.merienda(
-            textStyle: Theme.of(context).textTheme.headline3,
+            textStyle: Theme.of(context).textTheme.displaySmall,
             color: Theme.of(context).dialogBackgroundColor,
             fontWeight: FontWeight.bold,
           ),
@@ -123,7 +123,7 @@ class ResultColumn extends StatelessWidget {
         Text(
           '${t.yourResultsText}:',
           style: GoogleFonts.merienda(
-            textStyle: Theme.of(context).textTheme.headline5,
+            textStyle: Theme.of(context).textTheme.headlineSmall,
             //fontSize: 27,
             color: Theme.of(context).cardColor,
             fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class ResultColumn extends StatelessWidget {
             Text(
               t.timeText,
               style: GoogleFonts.merienda(
-                textStyle: Theme.of(context).textTheme.headline5,
+                textStyle: Theme.of(context).textTheme.headlineSmall,
                 color: Theme.of(context).cardColor,
                 fontWeight: FontWeight.w700,
               ),
@@ -151,7 +151,7 @@ class ResultColumn extends StatelessWidget {
             Text(
               durationText,
               style: GoogleFonts.merienda(
-                textStyle: Theme.of(context).textTheme.headline5,
+                textStyle: Theme.of(context).textTheme.headlineSmall,
                 color: Theme.of(context).cardColor,
                 fontWeight: FontWeight.w700,
               ),
@@ -172,7 +172,7 @@ class ResultColumn extends StatelessWidget {
             Text(
               t.stepsText,
               style: GoogleFonts.merienda(
-                textStyle: Theme.of(context).textTheme.headline5,
+                textStyle: Theme.of(context).textTheme.headlineSmall,
                 color: Theme.of(context).cardColor,
                 fontWeight: FontWeight.w700,
               ),
@@ -183,7 +183,7 @@ class ResultColumn extends StatelessWidget {
             Text(
               stepsText,
               style: GoogleFonts.merienda(
-                textStyle: Theme.of(context).textTheme.headline5,
+                textStyle: Theme.of(context).textTheme.headlineSmall,
                 color: Theme.of(context).cardColor,
                 fontWeight: FontWeight.w700,
               ),

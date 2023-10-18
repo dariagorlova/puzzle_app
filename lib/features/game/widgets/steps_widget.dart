@@ -19,7 +19,7 @@ class StepsWidget extends StatelessWidget {
         return Text(
           '${t.stepsText}: $stepsCount',
           style: GoogleFonts.merienda(
-            textStyle: Theme.of(context).textTheme.headline4,
+            textStyle: Theme.of(context).textTheme.headlineMedium,
             fontSize: 35,
             fontWeight: FontWeight.w700,
           ),

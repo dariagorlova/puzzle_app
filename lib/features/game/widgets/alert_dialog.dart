@@ -11,7 +11,7 @@ Future<void> showAlertDialog(BuildContext context, String time, int steps) {
       final body = '''
           ${t.yourResultsText} \n 
           ${t.timeText} $time \n 
-          ${t.stepsText} ${steps.toString()}''';
+          ${t.stepsText} $steps''';
       return AlertDialog(
         title: Text(t.congratulationText),
         content: Text(body),

@@ -1,31 +1,23 @@
-// **************************************************************************
-// AutoRouteGenerator
-// **************************************************************************
-
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
-// AutoRouteGenerator
+// AutoRouterGenerator
 // **************************************************************************
-//
+
 // ignore_for_file: type=lint
+// coverage:ignore-file
 
 part of 'app_router.dart';
 
-class _$AppRouter extends RootStackRouter {
-  _$AppRouter([GlobalKey<NavigatorState>? navigatorKey]) : super(navigatorKey);
+abstract class _$AppRouter extends RootStackRouter {
+  // ignore: unused_element
+  _$AppRouter({super.navigatorKey});
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    GameRoute.name: (routeData) {
-      return MaterialPageX<void>(
-        routeData: routeData,
-        child: const GameScreen(),
-      );
-    },
     CongratulationRoute.name: (routeData) {
       final args = routeData.argsAs<CongratulationRouteArgs>();
-      return MaterialPageX<bool>(
+      return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: CongratulationScreen(
           duration: args.duration,
@@ -34,31 +26,13 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    GameRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const GameScreen(),
+      );
+    },
   };
-
-  @override
-  List<RouteConfig> get routes => [
-        RouteConfig(
-          GameRoute.name,
-          path: '/',
-        ),
-        RouteConfig(
-          CongratulationRoute.name,
-          path: '/congratulation-screen',
-        ),
-      ];
-}
-
-/// generated route for
-/// [GameScreen]
-class GameRoute extends PageRouteInfo<void> {
-  const GameRoute()
-      : super(
-          GameRoute.name,
-          path: '/',
-        );
-
-  static const String name = 'GameRoute';
 }
 
 /// generated route for
@@ -68,17 +42,21 @@ class CongratulationRoute extends PageRouteInfo<CongratulationRouteArgs> {
     required String duration,
     Key? key,
     required int steps,
+    List<PageRouteInfo>? children,
   }) : super(
           CongratulationRoute.name,
-          path: '/congratulation-screen',
           args: CongratulationRouteArgs(
             duration: duration,
             key: key,
             steps: steps,
           ),
+          initialChildren: children,
         );
 
   static const String name = 'CongratulationRoute';
+
+  static const PageInfo<CongratulationRouteArgs> page =
+      PageInfo<CongratulationRouteArgs>(name);
 }
 
 class CongratulationRouteArgs {
@@ -98,4 +76,18 @@ class CongratulationRouteArgs {
   String toString() {
     return 'CongratulationRouteArgs{duration: $duration, key: $key, steps: $steps}';
   }
+}
+
+/// generated route for
+/// [GameScreen]
+class GameRoute extends PageRouteInfo<void> {
+  const GameRoute({List<PageRouteInfo>? children})
+      : super(
+          GameRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'GameRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

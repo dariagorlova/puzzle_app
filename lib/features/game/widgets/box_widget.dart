@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 
 class BoxWidget extends StatelessWidget {
   const BoxWidget({
-    super.key,
     required this.text,
     required this.width,
+    super.key,
   });
 
   final String text;
@@ -37,7 +37,7 @@ class BoxWidget extends StatelessWidget {
           child: Text(
             text,
             style: GoogleFonts.merienda(
-              textStyle: Theme.of(context).textTheme.headline4,
+              textStyle: Theme.of(context).textTheme.headlineMedium,
               fontSize: 35,
             ),
           ),

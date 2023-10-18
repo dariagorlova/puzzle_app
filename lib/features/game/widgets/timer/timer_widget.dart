@@ -16,9 +16,9 @@ class TimerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => TimerBloc(ticker: const Ticker()),
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
+        children: <Widget>[
           Center(child: TimerText()),
           SizedBox(
             height: 20,
@@ -34,18 +34,16 @@ class TimerText extends StatelessWidget {
   const TimerText({super.key});
   @override
   Widget build(BuildContext context) {
-    final duration =
-        context.select((TimerBloc bloc) => bloc.state.duration) - gameDuration;
+    final duration = context.select((TimerBloc bloc) => bloc.state.duration) - gameDuration;
 
-    final minutesStr =
-        (((duration / 60) % 60).floor()).toString().padLeft(2, '0');
+    final minutesStr = ((duration / 60) % 60).floor().toString().padLeft(2, '0');
 
     // ignore: noop_primitive_operations
     final secondsStr = (duration % 60).floor().toString().padLeft(2, '0');
     return Text(
       '${AppLocalizations.of(context).timeText}: $minutesStr:$secondsStr',
       style: GoogleFonts.merienda(
-        textStyle: Theme.of(context).textTheme.headline4,
+        textStyle: Theme.of(context).textTheme.headlineMedium,
         fontSize: 35,
         fontWeight: FontWeight.w700,
       ),
@@ -61,18 +59,14 @@ class Actions extends StatelessWidget {
       buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
       builder: (context, state) {
         return BlocListener<GameCubit, GameState>(
-          listenWhen: (previous, current) =>
-              !previous.gameHasBegun && current.gameHasBegun,
+          listenWhen: (previous, current) => !previous.gameHasBegun && current.gameHasBegun,
           listener: (context, state) {
             if (state.gameHasBegun) {
-              context
-                  .read<TimerBloc>()
-                  .add(const TimerStarted(duration: gameDuration));
+              context.read<TimerBloc>().add(const TimerStarted(duration: gameDuration));
             }
           },
           child: BlocListener<GameCubit, GameState>(
-            listenWhen: (previous, current) =>
-                !previous.playerWin && current.playerWin,
+            listenWhen: (previous, current) => !previous.playerWin && current.playerWin,
             listener: (context, state) {
               if (state.playerWin) {
                 context.read<TimerBloc>().add(const TimerReset());

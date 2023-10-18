@@ -11,15 +11,11 @@ CommonFunctions getCommonFunctions() {
 
   when(() => mock.isSolvable(listNumbers)).thenReturn(true);
 
-  when(() => mock.fillInitialCoordList(120, listNumbers))
-      .thenReturn(listCoords);
-  when(() => mock.fillInitialCoordList(120, listNumbersWinner))
-      .thenReturn(listCoordsWinner);
+  when(() => mock.fillInitialCoordList(120, listNumbers)).thenReturn(listCoords);
+  when(() => mock.fillInitialCoordList(120, listNumbersWinner)).thenReturn(listCoordsWinner);
 
-  when(() => mock.isPuzzleCompleted(listCoordsWinner, listCoordsFirstStep))
-      .thenReturn(false);
-  when(() => mock.isPuzzleCompleted(listCoordsWinner, listCoordsWinner))
-      .thenReturn(true);
+  when(() => mock.isPuzzleCompleted(listCoordsWinner, listCoordsFirstStep)).thenReturn(false);
+  when(() => mock.isPuzzleCompleted(listCoordsWinner, listCoordsWinner)).thenReturn(true);
 
   return mock;
 }
@@ -99,5 +95,5 @@ const listNumbersWinner = [
   13,
   14,
   15,
-  16
+  16,
 ];

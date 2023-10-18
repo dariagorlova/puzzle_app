@@ -66,9 +66,9 @@ class _GameScreenState extends State<_GameScreen> {
 
 class VerticalView extends StatelessWidget {
   const VerticalView({
-    super.key,
     required this.screenHeight,
     required this.screenWidth,
+    super.key,
   });
 
   final double screenHeight;
@@ -108,9 +108,9 @@ class VerticalView extends StatelessWidget {
 
 class HorizontalView extends StatelessWidget {
   const HorizontalView({
-    super.key,
     required this.screenHeight,
     required this.screenWidth,
+    super.key,
   });
 
   final double screenHeight;
@@ -119,8 +119,7 @@ class HorizontalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final boxWidth = screenHeight / 6;
-    final paddingHorValue =
-        (screenWidth * 0.6 - 4 * boxWidth - 3 * (boxWidth / 5)) / 2;
+    final paddingHorValue = (screenWidth * 0.6 - 4 * boxWidth - 3 * (boxWidth / 5)) / 2;
 
     return Stack(
       children: [
@@ -145,8 +144,8 @@ class HorizontalView extends StatelessWidget {
               SizedBox(
                 height: screenHeight,
                 width: screenWidth * 0.4,
-                child: Column(
-                  children: const [
+                child: const Column(
+                  children: [
                     StepsWidget(),
                     SizedBox(
                       height: 20,
