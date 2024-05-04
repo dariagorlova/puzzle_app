@@ -1,5 +1,7 @@
 # FlutterPuzzle
 
+![Screenshots](https://raw.githubusercontent.com/dariagorlova/puzzle_app/master/images/sample.png#300x200)
+
 Flutter version of the famous game "collect in order".
 
 ## The game rules.
@@ -12,7 +14,3 @@ The “Congratulations” page appears, when the puzzle is solved. The additiona
 * Time, spent for puzzle solving
 * Number of steps
 * “Restart game” button
-
-
-![](https://raw.githubusercontent.com/dariagorlova/puzzle_app/master/images/game.png)
-
